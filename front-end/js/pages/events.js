@@ -12,6 +12,37 @@ let activeFilter = "all";
 const COMMUNITY_EVENTS_STORAGE_KEY = "nexus_community_events";
 
 // ==========================================
+// 1.5 RBAC - HIDE CREATE EVENT FOR AUDIENCE
+// ==========================================
+
+/**
+ * Hides the "Create Event" option for audience users
+ * Only gamers (and higher roles) can create events
+ */
+function enforceCreateEventPermissions() {
+  const user = getCurrentUser();
+
+  // If user is not logged in or is an audience member, hide create event UI
+  if (!user || user.role === "audience") {
+    // Hide the "Create Event" tab button (3rd tab)
+    const createTabBtn = document.querySelector(".tab-btn:nth-child(3)");
+    if (createTabBtn) {
+      createTabBtn.style.display = "none";
+    }
+
+    // Hide the "+ Create Event" button
+    const createBtn = document.querySelector(".btn-create");
+    if (createBtn) {
+      createBtn.style.display = "none";
+    }
+
+    console.log(
+      "[EVENTS] Create Event permissions restricted for audience user",
+    );
+  }
+}
+
+// ==========================================
 // 2. TAB & VIEW NAVIGATION
 // ==========================================
 
@@ -611,6 +642,9 @@ function resetCreateForm() {
 // 6. INITIALIZATION
 // ==========================================
 document.addEventListener("DOMContentLoaded", () => {
+  // Enforce role-based create event permissions
+  enforceCreateEventPermissions();
+
   // Load and render dynamic events from localStorage
   renderDynamicEvents();
 
