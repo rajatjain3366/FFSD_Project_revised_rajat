@@ -63,28 +63,53 @@
 </div>
 </div>
 <div class="ch-search">
-<input placeholder="🔍 Search channels…" type="text"/>
+<input id="channelSearchInput" placeholder="🔍 Search channels…" type="text" oninput="filterChannels(this.value)"/>
 </div>
-<div class="ch-list">
-<div class="ch-group-lbl">▾ 📢 Announcements</div>
-<div class="ch-row" onclick="setChannel(this,'announcements','📣')"><span class="ch-type">📣</span><span class="ch-lbl">announcements</span><span class="ch-unread blue">1</span></div>
-<div class="ch-row" onclick="setChannel(this,'rules-and-info','📌')"><span class="ch-type">📌</span><span class="ch-lbl">rules-and-info</span></div>
-<div class="ch-group-lbl">▾ 💬 General</div>
-<div class="ch-row active" id="chGeneral" onclick="setChannel(this,'general','#')"><span class="ch-type">#</span><span class="ch-lbl">general</span><span class="ch-unread">12</span></div>
-<div class="ch-row" onclick="setChannel(this,'introductions','#')"><span class="ch-type">#</span><span class="ch-lbl">introductions</span></div>
-<div class="ch-row" onclick="setChannel(this,'off-topic','#')"><span class="ch-type">#</span><span class="ch-lbl">off-topic</span></div>
-<div class="ch-group-lbl">▾ 💻 Development</div>
-<div class="ch-row" onclick="setChannel(this,'frontend','#')"><span class="ch-type">#</span><span class="ch-lbl">frontend</span><span class="ch-unread">4</span></div>
-<div class="ch-row" onclick="setChannel(this,'Strategy','#')"><span class="ch-type">#</span><span class="ch-lbl">Strategy</span></div>
-<div class="ch-row" onclick="setChannel(this,'code-review','#')"><span class="ch-type">#</span><span class="ch-lbl">code-review</span><span class="ch-unread">7</span></div>
-<div class="ch-row" onclick="setChannel(this,'Streaming','#')"><span class="ch-type">#</span><span class="ch-lbl">Streaming</span></div>
-<div class="ch-row" onclick="setChannel(this,'open-source','#')"><span class="ch-type">#</span><span class="ch-lbl">open-source</span></div>
-<div class="ch-group-lbl">▾ 🎯 Career</div>
-<div class="ch-row" onclick="setChannel(this,'job-board','#')"><span class="ch-type">#</span><span class="ch-lbl">job-board</span></div>
-<div class="ch-row" onclick="setChannel(this,'portfolio-review','#')"><span class="ch-type">#</span><span class="ch-lbl">portfolio-review</span></div>
-<div class="ch-group-lbl">▾ 🔊 Voice</div>
-<div class="ch-row" onclick="setChannel(this,'study-together','🔊')"><span class="ch-type">🔊</span><span class="ch-lbl">study-together</span><span class="u-extracted-153">●3</span></div>
-<div class="ch-row" onclick="setChannel(this,'pair-programming','🔊')"><span class="ch-type">🔊</span><span class="ch-lbl">pair-programming</span></div>
+<div class="ch-list" id="channelList">
+  <!-- Category: Announcements -->
+  <div class="ch-category" data-category="announcements">
+    <div class="ch-group-lbl" onclick="toggleCategory('announcements')"><span class="cat-arrow">▾</span> 📢 Announcements</div>
+    <div class="ch-category-items">
+      <div class="ch-row" onclick="setChannel(this,'announcements','📣')"><span class="ch-type">📣</span><span class="ch-lbl">announcements</span><span class="ch-unread blue">1</span></div>
+      <div class="ch-row" onclick="setChannel(this,'rules-and-info','📌')"><span class="ch-type">📌</span><span class="ch-lbl">rules-and-info</span></div>
+    </div>
+  </div>
+  <!-- Category: General -->
+  <div class="ch-category" data-category="general">
+    <div class="ch-group-lbl" onclick="toggleCategory('general')"><span class="cat-arrow">▾</span> 💬 General</div>
+    <div class="ch-category-items">
+      <div class="ch-row active" id="chGeneral" onclick="setChannel(this,'general','#')"><span class="ch-type">#</span><span class="ch-lbl">general</span><span class="ch-unread">12</span></div>
+      <div class="ch-row" onclick="setChannel(this,'introductions','#')"><span class="ch-type">#</span><span class="ch-lbl">introductions</span></div>
+      <div class="ch-row" onclick="setChannel(this,'off-topic','#')"><span class="ch-type">#</span><span class="ch-lbl">off-topic</span></div>
+    </div>
+  </div>
+  <!-- Category: Development -->
+  <div class="ch-category" data-category="development">
+    <div class="ch-group-lbl" onclick="toggleCategory('development')"><span class="cat-arrow">▾</span> 💻 Development</div>
+    <div class="ch-category-items">
+      <div class="ch-row" onclick="setChannel(this,'frontend','#')"><span class="ch-type">#</span><span class="ch-lbl">frontend</span><span class="ch-unread">4</span></div>
+      <div class="ch-row" onclick="setChannel(this,'Strategy','#')"><span class="ch-type">#</span><span class="ch-lbl">Strategy</span></div>
+      <div class="ch-row" onclick="setChannel(this,'code-review','#')"><span class="ch-type">#</span><span class="ch-lbl">code-review</span><span class="ch-unread">7</span></div>
+      <div class="ch-row" onclick="setChannel(this,'Streaming','#')"><span class="ch-type">#</span><span class="ch-lbl">Streaming</span></div>
+      <div class="ch-row" onclick="setChannel(this,'open-source','#')"><span class="ch-type">#</span><span class="ch-lbl">open-source</span></div>
+    </div>
+  </div>
+  <!-- Category: Career -->
+  <div class="ch-category" data-category="career">
+    <div class="ch-group-lbl" onclick="toggleCategory('career')"><span class="cat-arrow">▾</span> 🎯 Career</div>
+    <div class="ch-category-items">
+      <div class="ch-row" onclick="setChannel(this,'job-board','#')"><span class="ch-type">#</span><span class="ch-lbl">job-board</span></div>
+      <div class="ch-row" onclick="setChannel(this,'portfolio-review','#')"><span class="ch-type">#</span><span class="ch-lbl">portfolio-review</span></div>
+    </div>
+  </div>
+  <!-- Category: Voice -->
+  <div class="ch-category" data-category="voice">
+    <div class="ch-group-lbl" onclick="toggleCategory('voice')"><span class="cat-arrow">▾</span> 🔊 Voice</div>
+    <div class="ch-category-items">
+      <div class="ch-row" onclick="setChannel(this,'study-together','🔊')"><span class="ch-type">🔊</span><span class="ch-lbl">study-together</span><span class="ch-voice-count">●3</span></div>
+      <div class="ch-row" onclick="setChannel(this,'pair-programming','🔊')"><span class="ch-type">🔊</span><span class="ch-lbl">pair-programming</span></div>
+    </div>
+  </div>
 </div>
 <div class="ch-footer">
 <div class="user-av">AM</div>
@@ -92,25 +117,47 @@
 <div class="user-av-name">Alex Morgan</div>
 <div class="user-av-status">Online</div>
 </div>
-<span class="mic-btn">🎙</span>
-<span class="mic-btn">🎧</span>
+<span class="mic-btn" title="Microphone">🎙</span>
+<span class="mic-btn" title="Headset">🎧</span>
 </div>
 </div>
 <!-- ─── CENTER: CHAT ─── -->
 <div class="chat-area">
 <!-- Chat Header -->
 <div class="chat-header">
-<div class="ch-name-display">
-<span class="ch-hash">#</span>
-<span class="ch-name-text" id="activeChanName">general</span>
-<span class="ch-topic" id="activeChanTopic">The main hub — say hello, share updates, ask anything 👋</span>
+  <div class="ch-name-display">
+    <span class="ch-hash" id="activeChanHash">#</span>
+    <span class="ch-name-text" id="activeChanName">general</span>
+    <span class="ch-topic" id="activeChanTopic">The main hub — say hello, share updates, ask anything 👋</span>
+  </div>
+  <div class="chat-header-actions">
+    <div class="hact-btn" id="searchToggleBtn" title="Search messages" onclick="toggleSearchBar()">🔍</div>
+    <div class="hact-btn" id="pinnedToggleBtn" title="Pinned messages" onclick="togglePinnedPanel()">📌</div>
+    <div class="member-count-chip" id="memberCountChip" title="Toggle member list" onclick="toggleMemberSidebar()">👥 312</div>
+  </div>
 </div>
-<div class="chat-header-actions">
-<div class="hact-btn" title="Search">🔍</div>
-<div class="hact-btn" title="Pinned">📌</div>
-<div class="hact-btn" title="Threads">🧵</div>
-<div class="member-count-chip">👥 312</div>
+<!-- In-chat Search Bar (hidden by default) -->
+<div class="chat-search-bar" id="chatSearchBar">
+  <div class="chat-search-inner">
+    <span class="chat-search-icon">🔍</span>
+    <input type="text" id="chatSearchInput" placeholder="Search messages in #general…" oninput="searchMessages(this.value)"/>
+    <span class="chat-search-count" id="chatSearchCount"></span>
+    <button class="chat-search-close" onclick="toggleSearchBar()">✕</button>
+  </div>
 </div>
+<!-- Pinned Messages Panel (hidden by default) -->
+<div class="pinned-panel" id="pinnedPanel">
+  <div class="pinned-panel-header">
+    <span>📌 Pinned Messages</span>
+    <button class="pinned-panel-close" onclick="togglePinnedPanel()">✕</button>
+  </div>
+  <div class="pinned-panel-list" id="pinnedList">
+    <div class="pinned-item">
+      <div class="pinned-item-meta"><span class="pinned-item-author">Jake Kim</span> <span class="pinned-item-time">10:02 AM</span></div>
+      <div class="pinned-item-text">Good morning everyone! 🌟 The <strong>March Hack Sprint</strong> kicks off <strong>tomorrow at 2 PM</strong>. Register in <span class="mention">#events</span> if you haven't already!</div>
+    </div>
+    <div class="pinned-empty" id="pinnedEmpty" style="display:none;">No pinned messages yet.</div>
+  </div>
 </div>
 <!-- Messages -->
 <div class="messages-wrap" id="messagesWrap">
@@ -132,18 +179,17 @@
 </div>
 </div>
 <div class="msg-actions">
-<div class="act-btn" title="FPS">😊</div>
-<div class="act-btn" title="Reply">↩</div>
-<div class="act-btn" title="Thread">🧵</div>
-<div class="act-btn" title="More" onclick="showMessageMenu(this)">⋯</div>
+<div class="act-btn" title="Add Reaction" onclick="openEmojiPicker(this, event)">😊</div>
+<div class="act-btn" title="Reply" onclick="replyToMessage(this)">↩</div>
+<div class="act-btn" title="More" onclick="showMessageMenu(this, event)">⋯</div>
 </div>
 </div>
 <!-- Message 2: Sara Lee (Mod) -->
-<div class="msg-group u-extracted-156">
+<div class="msg-group">
 <div class="msg-av grad-purple">SL</div>
 <div class="msg-body">
 <div class="msg-header">
-<span class="msg-uname u-extracted-157">Sara Lee</span>
+<span class="msg-uname" style="color:#a78bfa">Sara Lee</span>
 <span class="msg-role role-mod-badge">Mod</span>
 <span class="msg-time">10:08 AM</span>
 </div>
@@ -151,7 +197,7 @@
 <div class="code-block">
 <div class="code-block-header">
 <span class="code-lang">bash</span>
-<button class="code-copy" onclick="this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)">Copy</button>
+<button class="code-copy" onclick="copyCode(this)">Copy</button>
 </div>
 <pre><span class="cm"># Install globally</span>
 <span class="fn">npm</span> install -g nexus-cli
@@ -160,7 +206,7 @@
 <span class="fn">nexus</span> login --token <span class="str">YOUR_TOKEN_HERE</span>
 
 <span class="cm"># Bootstrap a new project</span>
-<span class="fn">nexus</span> init my-project --template <span class="str">FPS-ts</span></pre>
+<span class="fn">nexus</span> init my-project --template <span class="str">fps-ts</span></pre>
 </div>
 <div class="reactions">
 <div class="FPS-pill" onclick="toggleFPS(this)"><span>🙏</span><span class="FPS-count">9</span></div>
@@ -168,15 +214,17 @@
 </div>
 </div>
 <div class="msg-actions">
-<div class="act-btn">😊</div><div class="act-btn">↩</div><div class="act-btn">🧵</div><div class="act-btn">⋯</div>
+<div class="act-btn" title="Add Reaction" onclick="openEmojiPicker(this, event)">😊</div>
+<div class="act-btn" title="Reply" onclick="replyToMessage(this)">↩</div>
+<div class="act-btn" title="More" onclick="showMessageMenu(this, event)">⋯</div>
 </div>
 </div>
 <!-- Message 3: Tom Chen (Member) -->
-<div class="msg-group u-extracted-156">
+<div class="msg-group">
 <div class="msg-av grad-cyan">TC</div>
 <div class="msg-body">
 <div class="msg-header">
-<span class="msg-uname u-extracted-158">Tom Chen</span>
+<span class="msg-uname" style="color:#22d3ee">Tom Chen</span>
 <span class="msg-time">10:15 AM</span>
 </div>
 <div class="msg-text">Thanks <span class="mention">@Sara Lee</span> — worked perfectly on my M2 Mac. One note: make sure you're on <code>node ≥ 18</code> or you'll hit the <code>fetch</code> polyfill issue.</div>
@@ -185,26 +233,28 @@
 </div>
 </div>
 <div class="msg-actions">
-<div class="act-btn">😊</div><div class="act-btn">↩</div><div class="act-btn">🧵</div><div class="act-btn">⋯</div>
+<div class="act-btn" title="Add Reaction" onclick="openEmojiPicker(this, event)">😊</div>
+<div class="act-btn" title="Reply" onclick="replyToMessage(this)">↩</div>
+<div class="act-btn" title="More" onclick="showMessageMenu(this, event)">⋯</div>
 </div>
 </div>
-<div class="msg-cont u-extracted-159">
+<div class="msg-cont">
 <span class="msg-cont-time">10:16</span>
 <div class="msg-text">Also anyone else getting excited for tomorrow? My team has been grinding on our project for 2 weeks 😅</div>
 </div>
 <!-- Message 4: Mia Park with image -->
-<div class="msg-group u-extracted-156">
+<div class="msg-group">
 <div class="msg-av grad-pink">MP</div>
 <div class="msg-body">
 <div class="msg-header">
-<span class="msg-uname u-extracted-160">Mia Park</span>
+<span class="msg-uname" style="color:#f472b6">Mia Park</span>
 <span class="msg-time">10:34 AM</span>
 </div>
 <div class="msg-text">Sharing our team's early UI mockup for the hackathon 👀 Still very rough but excited about the direction!</div>
-<div class="msg-img u-extracted-161">
-<span class="u-extracted-162">🖼</span>
+<div class="msg-img">
+<span>🖼</span>
 </div>
-<div class="u-extracted-163">hackathon-mockup-v1.png · 1.2 MB</div>
+<div class="msg-attach-name">hackathon-mockup-v1.png · 1.2 MB</div>
 <div class="reactions">
 <div class="FPS-pill" onclick="toggleFPS(this)"><span>🔥</span><span class="FPS-count">22</span></div>
 <div class="FPS-pill mine" onclick="toggleFPS(this)"><span>😍</span><span class="FPS-count">8</span></div>
@@ -212,39 +262,45 @@
 </div>
 </div>
 <div class="msg-actions">
-<div class="act-btn">😊</div><div class="act-btn">↩</div><div class="act-btn">🧵</div><div class="act-btn">⋯</div>
+<div class="act-btn" title="Add Reaction" onclick="openEmojiPicker(this, event)">😊</div>
+<div class="act-btn" title="Reply" onclick="replyToMessage(this)">↩</div>
+<div class="act-btn" title="More" onclick="showMessageMenu(this, event)">⋯</div>
 </div>
 </div>
 <!-- Message 5: Alex (self) -->
-<div class="msg-group u-extracted-156">
+<div class="msg-group">
 <div class="msg-av grad-violet">AM</div>
 <div class="msg-body">
 <div class="msg-header">
-<span class="msg-uname u-extracted-164">Alex Morgan</span>
-<span class="u-extracted-165">You</span>
+<span class="msg-uname" style="color:var(--accent-light,#818cf8)">Alex Morgan</span>
+<span class="msg-role" style="background:rgba(91,110,245,0.1);color:var(--accent);font-size:9px;padding:1px 6px;border-radius:10px;">You</span>
 <span class="msg-time">10:41 AM</span>
 </div>
-<div class="msg-text u-extracted-166">This looks incredible <span class="mention">@Mia Park</span>! Love the color scheme. Are you using <strong>Gameunity's design system</strong> or building from scratch?</div>
+<div class="msg-text self-msg">This looks incredible <span class="mention">@Mia Park</span>! Love the color scheme. Are you using <strong>Gameunity's design system</strong> or building from scratch?</div>
 <div class="reactions">
 <div class="FPS-pill" onclick="toggleFPS(this)"><span>❤️</span><span class="FPS-count">3</span></div>
 </div>
 </div>
 <div class="msg-actions">
-<div class="act-btn">😊</div><div class="act-btn">↩</div><div class="act-btn">🧵</div><div class="act-btn">⋯</div>
+<div class="act-btn" title="Add Reaction" onclick="openEmojiPicker(this, event)">😊</div>
+<div class="act-btn" title="Reply" onclick="replyToMessage(this)">↩</div>
+<div class="act-btn" title="More" onclick="showMessageMenu(this, event)">⋯</div>
 </div>
 </div>
 <!-- Message 6: Leo Perez -->
-<div class="msg-group u-extracted-156">
+<div class="msg-group">
 <div class="msg-av grad-green">LP</div>
 <div class="msg-body">
 <div class="msg-header">
-<span class="msg-uname u-extracted-167">Leo Perez</span>
+<span class="msg-uname" style="color:#4ade80">Leo Perez</span>
 <span class="msg-time">10:44 AM</span>
 </div>
 <div class="msg-text">Quick question — is it okay to use external APIs for the hackathon? Specifically thinking about <code>OpenAI</code> and <code>Mapbox</code>.</div>
 </div>
 <div class="msg-actions">
-<div class="act-btn">😊</div><div class="act-btn">↩</div><div class="act-btn">🧵</div><div class="act-btn">⋯</div>
+<div class="act-btn" title="Add Reaction" onclick="openEmojiPicker(this, event)">😊</div>
+<div class="act-btn" title="Reply" onclick="replyToMessage(this)">↩</div>
+<div class="act-btn" title="More" onclick="showMessageMenu(this, event)">⋯</div>
 </div>
 </div>
 <div class="msg-cont">
@@ -257,11 +313,12 @@
 <!-- System msg -->
 <div class="sys-msg">Jake Kim pinned a message in this channel</div>
 <!-- Message 7: Ryan Ng latest -->
-<div class="msg-group u-extracted-168">
-<div class="msg-av u-extracted-169">RN</div>
+<div class="msg-group">
+<div class="msg-av" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">RN</div>
 <div class="msg-body">
 <div class="msg-header">
-<span class="msg-uname u-extracted-170">Ryan Ng</span>
+<span class="msg-uname" style="color:#fbbf24">Ryan Ng</span>
+<span class="msg-role role-mod-badge">Mod</span>
 <span class="msg-time">10:52 AM</span>
 </div>
 <div class="msg-text"><span class="mention">@Leo Perez</span> Yes, external APIs are totally fine! Just make sure you're not hitting paid tiers that require billing. Free-tier everything and you're good 👍</div>
@@ -271,115 +328,134 @@
 </div>
 </div>
 <div class="msg-actions">
-<div class="act-btn">😊</div><div class="act-btn">↩</div><div class="act-btn">🧵</div><div class="act-btn">⋯</div>
+<div class="act-btn" title="Add Reaction" onclick="openEmojiPicker(this, event)">😊</div>
+<div class="act-btn" title="Reply" onclick="replyToMessage(this)">↩</div>
+<div class="act-btn" title="More" onclick="showMessageMenu(this, event)">⋯</div>
 </div>
 </div>
 </div>
 <!-- Typing -->
 <div class="typing-bar">
 <div class="typing-dots"><span></span><span></span><span></span></div>
-<span><strong class="u-extracted-171">Mia Park</strong> is typing…</span>
+<span><strong class="typing-name">Mia Park</strong> is typing…</span>
+</div>
+<!-- Reply Preview Bar -->
+<div class="reply-bar" id="replyBar" style="display:none;">
+  <div class="reply-bar-inner">
+    <span class="reply-bar-icon">↩</span>
+    <span class="reply-bar-text" id="replyBarText">Replying to <strong id="replyBarName"></strong></span>
+    <button class="reply-bar-close" onclick="cancelReply()">✕</button>
+  </div>
 </div>
 <!-- Input -->
 <div class="input-area">
 <div class="input-wrap">
 <div class="input-toolbar">
-<div class="tb-btn" title="Bold">𝐁</div>
-<div class="tb-btn" title="Italic">𝐼</div>
-<div class="tb-btn" title="Code">&lt;/&gt;</div>
-<div class="tb-btn" title="Link">🔗</div>
-<div class="tb-divider"></div>
-<div class="tb-btn" title="Ordered List">1.</div>
-<div class="tb-btn" title="Bullet List">•</div>
-<div class="tb-divider"></div>
-<div class="tb-btn" title="Emoji">😊</div>
-<div class="tb-btn" title="GIF">GIF</div>
-<div class="tb-btn" title="Attach">📎</div>
-<div class="tb-btn" title="Image">🖼</div>
+  <!-- Text formatting -->
+  <div class="tb-btn" title="Bold (Ctrl+B)" onclick="formatText('bold')"><strong>B</strong></div>
+  <div class="tb-btn" title="Italic (Ctrl+I)" onclick="formatText('italic')"><em>I</em></div>
+  <div class="tb-btn tb-mono" title="Inline Code" onclick="formatText('code')">&lt;/&gt;</div>
+  <div class="tb-btn" title="Link" onclick="formatText('link')">🔗</div>
+  <div class="tb-divider"></div>
+  <!-- Lists -->
+  <div class="tb-btn" title="Ordered List" onclick="formatText('ol')">1.</div>
+  <div class="tb-btn" title="Bullet List" onclick="formatText('ul')">•</div>
+  <div class="tb-divider"></div>
+  <!-- Media & file -->
+  <div class="tb-btn" title="Emoji" onclick="openToolbarEmoji()">😊</div>
+  <div class="tb-btn" title="Attach File" onclick="triggerFileAttach()">📎</div>
+  <input type="file" id="fileInput" style="display:none" onchange="handleFileAttach(this)"/>
 </div>
 <div class="input-row">
 <textarea id="msgInput" oninput="autoResize(this)" onkeydown="handleKey(event)" placeholder="Message #general…" rows="1"></textarea>
-<button class="send-btn" onclick="sendMessage()">➤</button>
+<button class="send-btn" onclick="sendMessage()" title="Send message">➤</button>
 </div>
 </div>
 </div>
 </div>
 <!-- ─── RIGHT: ONLINE MEMBERS ─── -->
-<div class="mem-sidebar">
+<div class="mem-sidebar" id="memberSidebar">
 <div class="mem-header">
 <div class="mem-title">Online Members <span class="online-count">312</span></div>
 </div>
 <div class="mem-list">
 <div class="mem-group-title">👑 Owner</div>
 <div class="mem-row">
-<div class="m-av u-extracted-154">JK<div class="m-stat u-extracted-172"></div></div>
+<div class="m-av" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">JK<div class="m-stat" style="background:var(--success)"></div></div>
 <div class="m-info"><div class="m-name">Jake Kim</div><div class="m-role-tag owner-c">Owner</div></div>
 </div>
-<div class="mem-group-title u-extracted-156">🛡 Moderators — 3</div>
+<div class="mem-group-title" style="margin-top:6px">🛡 Moderators — 3</div>
 <div class="mem-row">
-<div class="m-av grad-purple">SL<div class="m-stat u-extracted-172"></div></div>
+<div class="m-av grad-purple">SL<div class="m-stat" style="background:var(--success)"></div></div>
 <div class="m-info"><div class="m-name">Sara Lee</div><div class="m-role-tag mod-c">Moderator</div></div>
 </div>
 <div class="mem-row">
-<div class="m-av u-extracted-169">RN<div class="m-stat u-extracted-172"></div></div>
+<div class="m-av" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">RN<div class="m-stat" style="background:var(--success)"></div></div>
 <div class="m-info"><div class="m-name">Ryan Ng</div><div class="m-role-tag mod-c">Moderator</div></div>
 </div>
 <div class="mem-row">
-<div class="m-av grad-pink">ZA<div class="m-stat u-extracted-172"></div></div>
+<div class="m-av grad-pink">ZA<div class="m-stat" style="background:var(--success)"></div></div>
 <div class="m-info"><div class="m-name">Zara Ali</div><div class="m-role-tag mod-c">Moderator</div></div>
 </div>
-<div class="mem-group-title u-extracted-156">🟢 Online — 308</div>
+<div class="mem-group-title" style="margin-top:6px">🟢 Online — 308</div>
 <div class="mem-row">
-<div class="m-av grad-violet">AM<div class="m-stat u-extracted-172"></div></div>
-<div class="m-info"><div class="m-name">Alex Morgan</div><div class="m-role-tag">You</div></div>
+<div class="m-av grad-violet">AM<div class="m-stat" style="background:var(--success)"></div></div>
+<div class="m-info"><div class="m-name">Alex Morgan</div><div class="m-role-tag" style="color:var(--accent)">You</div></div>
 </div>
 <div class="mem-row">
-<div class="m-av grad-cyan">TC<div class="m-stat u-extracted-172"></div></div>
+<div class="m-av grad-cyan">TC<div class="m-stat" style="background:var(--success)"></div></div>
 <div class="m-info"><div class="m-name">Tom Chen</div><div class="m-role-tag">Member</div></div>
 </div>
 <div class="mem-row">
-<div class="m-av grad-pink">MP<div class="m-stat u-extracted-172"></div></div>
-<div class="m-info"><div class="m-name u-extracted-173">Mia Park</div><div class="m-role-tag u-extracted-174">typing…</div></div>
+<div class="m-av grad-pink">MP<div class="m-stat" style="background:var(--success)"></div></div>
+<div class="m-info"><div class="m-name" style="color:var(--text-1)">Mia Park</div><div class="m-role-tag" style="color:var(--success);font-style:italic">typing…</div></div>
 </div>
 <div class="mem-row">
-<div class="m-av grad-green">LP<div class="m-stat u-extracted-172"></div></div>
+<div class="m-av grad-green">LP<div class="m-stat" style="background:var(--success)"></div></div>
 <div class="m-info"><div class="m-name">Leo Perez</div><div class="m-role-tag">Member</div></div>
 </div>
 <div class="mem-row">
-<div class="m-av u-extracted-175">DK<div class="m-stat u-extracted-172"></div></div>
+<div class="m-av" style="background:linear-gradient(135deg,#6366f1,#3b82f6)">DK<div class="m-stat" style="background:var(--success)"></div></div>
 <div class="m-info"><div class="m-name">Dan Kim</div><div class="m-role-tag">Member</div></div>
 </div>
 <div class="mem-row">
-<div class="m-av u-extracted-176">NV<div class="m-stat u-extracted-172"></div></div>
+<div class="m-av" style="background:linear-gradient(135deg,#ec4899,#8b5cf6)">NV<div class="m-stat" style="background:var(--success)"></div></div>
 <div class="m-info"><div class="m-name">Nina V</div><div class="m-role-tag">Member</div></div>
 </div>
 <div class="mem-row">
-<div class="m-av u-extracted-177">OT<div class="m-stat u-extracted-178"></div></div>
-<div class="m-info"><div class="m-name">Omar T</div><div class="m-role-tag">Away</div></div>
+<div class="m-av" style="background:linear-gradient(135deg,#64748b,#475569)">OT<div class="m-stat" style="background:var(--warn)"></div></div>
+<div class="m-info"><div class="m-name">Omar T</div><div class="m-role-tag" style="color:var(--warn)">Away</div></div>
 </div>
 <div class="mem-row">
-<div class="m-av u-extracted-179">BW<div class="m-stat u-extracted-172"></div></div>
+<div class="m-av" style="background:linear-gradient(135deg,#0891b2,#06b6d4)">BW<div class="m-stat" style="background:var(--success)"></div></div>
 <div class="m-info"><div class="m-name">Beth W</div><div class="m-role-tag">Member</div></div>
 </div>
 <div class="mem-row">
-<div class="m-av u-extracted-180">PJ<div class="m-stat u-extracted-172"></div></div>
+<div class="m-av" style="background:linear-gradient(135deg,#7c3aed,#a21caf)">PJ<div class="m-stat" style="background:var(--success)"></div></div>
 <div class="m-info"><div class="m-name">Priya J</div><div class="m-role-tag">Member</div></div>
 </div>
 <div class="mem-row">
-<div class="m-av u-extracted-181">KL<div class="m-stat u-extracted-172"></div></div>
+<div class="m-av" style="background:linear-gradient(135deg,#d97706,#b45309)">KL<div class="m-stat" style="background:var(--success)"></div></div>
 <div class="m-info"><div class="m-name">Kai L</div><div class="m-role-tag">Member</div></div>
 </div>
-<div class="mem-group-title u-extracted-182">⬤ Offline — 2,139</div>
-<div class="mem-row u-extracted-150">
-<div class="m-av u-extracted-183">FS<div class="m-stat u-extracted-184"></div></div>
+<div class="mem-group-title" style="margin-top:6px;opacity:0.5">⬤ Offline — 2,139</div>
+<div class="mem-row" style="opacity:0.45">
+<div class="m-av" style="background:#1e2433">FS<div class="m-stat" style="background:#4b5563"></div></div>
 <div class="m-info"><div class="m-name">Felix S</div><div class="m-role-tag">Offline</div></div>
 </div>
-<div class="mem-row u-extracted-150">
-<div class="m-av u-extracted-183">JR<div class="m-stat u-extracted-184"></div></div>
+<div class="mem-row" style="opacity:0.45">
+<div class="m-av" style="background:#1e2433">JR<div class="m-stat" style="background:#4b5563"></div></div>
 <div class="m-info"><div class="m-name">Jan R</div><div class="m-role-tag">Offline</div></div>
 </div>
 </div>
 </div>
+
+<!-- Emoji Picker Popup -->
+<div class="emoji-picker" id="emojiPicker">
+  <div class="emoji-picker-header">Add Reaction</div>
+  <div class="emoji-picker-grid" id="emojiPickerGrid"></div>
+</div>
+
 <script src="../js/core/auth.js"></script>
 <script src="../js/components/rbac-nav.js"></script>
 <script src="../js/pages/chat.js"></script>
