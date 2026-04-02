@@ -1,431 +1,718 @@
 <!DOCTYPE html>
 
 <html lang="en">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Gameunity – Events</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&amp;family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&amp;display=swap" rel="stylesheet"/>
-<link href="../css/global.css" rel="stylesheet"/>
-<link href="../css/pages/events.css" rel="stylesheet"/>
-<link href="../css/pages/rbac-nav.css" rel="stylesheet"/>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Gameunity – Events</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&amp;family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&amp;display=swap"
+    rel="stylesheet" />
+  <link href="../css/global.css" rel="stylesheet" />
+  <link href="../css/pages/events.css" rel="stylesheet" />
+  <link href="../css/pages/rbac-nav.css" rel="stylesheet" />
 </head>
+
 <body>
-<!-- ─── APP RAIL ─── -->
-<aside class="app-rail">
-  <div class="rail-logo">⬡</div>
-  
-  <div class="rail-divider"></div>
-  
-  <!-- Main Nav -->
-  <a href="dashboard.html" class="rail-item" data-tooltip="Home">🏠</a>
-  <a href="discovery.html" class="rail-item" data-tooltip="Discover">🔍</a>
-  <a href="events.html" class="rail-item active" data-tooltip="Events">📅<div class="notif-dot" style="background:var(--gold);width:6px;height:6px;"></div></a>
-  <a href="profile-settings.html" class="rail-item" data-tooltip="Settings">⚙️</a>
-  
-  <div class="rail-divider"></div>
-  
-  <!-- Communities -->
-  <a href="community-page.html?name=pro-gamers" class="rail-item rail-comm grad-purple" data-tooltip="Pro Gamers">
-    ⚡<div class="rail-dot bg-dot-green"></div>
-  </a>
-  <a href="community-page.html?name=rpg-tavern" class="rail-item rail-comm grad-orange" data-tooltip="RPG Tavern">
-    🎨<div class="rail-dot bg-dot-green"></div>
-  </a>
-  <a href="community-page.html?name=gamezone" class="rail-item rail-comm grad-cyan" data-tooltip="GameZone">
-    🎮<div class="rail-dot bg-dot-orange"></div>
-  </a>
-  <a href="community-page.html?name=fps-masters" class="rail-item rail-comm grad-green" data-tooltip="FPS Masters">
-    🌿<div class="rail-dot bg-dot-gray"></div>
-  </a>
-  <a href="community-page.html?name=speedrunners" class="rail-item rail-comm grad-pink" data-tooltip="SpeedRunners">
-    🎵<div class="rail-dot bg-dot-green"></div>
-  </a>
-  <a href="community-page.html?name=strategy-gods" class="rail-item rail-comm grad-violet" data-tooltip="Strategy Gods">
-    📚<div class="rail-dot bg-dot-gray"></div>
-  </a>
-  <a href="create-community.html" class="rail-item" data-tooltip="Create Community" style="background:rgba(255,255,255,0.05);color:var(--text-1);font-weight:600;border-radius:14px;">✚</a>
-  
-  <div class="rail-footer">
-    <div class="rail-avatar" onclick="window.location.href='profile-settings.html'" data-tooltip="Profile">AM<div class="rail-dot bg-dot-green" style="position:absolute;bottom:-2px;right:-2px;width:12px;height:12px;border-radius:50%;border:2px solid var(--bg-sidebar);"></div></div>
+  <!-- ─── APP RAIL ─── -->
+  <aside class="app-rail">
+    <div class="rail-logo">⬡</div>
+
+    <div class="rail-divider"></div>
+
+    <!-- Main Nav -->
+    <a href="dashboard.html" class="rail-item" data-tooltip="Home">🏠</a>
+    <a href="discovery.html" class="rail-item" data-tooltip="Discover">🔍</a>
+    <a href="events.html" class="rail-item active" data-tooltip="Events">📅<div class="notif-dot"
+        style="background:var(--gold);width:6px;height:6px;"></div></a>
+    <a href="profile-settings.html" class="rail-item" data-tooltip="Settings">⚙️</a>
+
+    <div class="rail-divider"></div>
+
+    <!-- Communities -->
+    <a href="community-page.html?name=pro-gamers" class="rail-item rail-comm grad-purple" data-tooltip="Pro Gamers">
+      ⚡<div class="rail-dot bg-dot-green"></div>
+    </a>
+    <a href="community-page.html?name=rpg-tavern" class="rail-item rail-comm grad-orange" data-tooltip="RPG Tavern">
+      🎨<div class="rail-dot bg-dot-green"></div>
+    </a>
+    <a href="community-page.html?name=gamezone" class="rail-item rail-comm grad-cyan" data-tooltip="GameZone">
+      🎮<div class="rail-dot bg-dot-orange"></div>
+    </a>
+    <a href="community-page.html?name=fps-masters" class="rail-item rail-comm grad-green" data-tooltip="FPS Masters">
+      🌿<div class="rail-dot bg-dot-gray"></div>
+    </a>
+    <a href="community-page.html?name=speedrunners" class="rail-item rail-comm grad-pink" data-tooltip="SpeedRunners">
+      🎵<div class="rail-dot bg-dot-green"></div>
+    </a>
+    <a href="community-page.html?name=strategy-gods" class="rail-item rail-comm grad-violet"
+      data-tooltip="Strategy Gods">
+      📚<div class="rail-dot bg-dot-gray"></div>
+    </a>
+    <a href="create-community.html" class="rail-item" data-tooltip="Create Community"
+      style="background:rgba(255,255,255,0.05);color:var(--text-1);font-weight:600;border-radius:14px;">✚</a>
+
+    <div class="rail-footer">
+      <div class="rail-avatar" onclick="window.location.href='profile-settings.html'" data-tooltip="Profile">AM<div
+          class="rail-dot bg-dot-green"
+          style="position:absolute;bottom:-2px;right:-2px;width:12px;height:12px;border-radius:50%;border:2px solid var(--bg-sidebar);">
+        </div>
+      </div>
+    </div>
+  </aside>
+  <!-- ─── MAIN ─── -->
+  <div class="main">
+    <header class="header">
+      <div class="header-title">Events</div>
+      <div class="header-actions">
+        <div class="header-avatar">AM</div>
+      </div>
+    </header>
+    <!-- Tab Bar -->
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('upcoming',this)">📅 Upcoming <span
+          class="tab-count">10</span></button>
+      <button class="tab-btn" onclick="switchTab('registered',this)">🎟 My Registrations <span
+          class="tab-count">3</span></button>
+      <button class="tab-btn" onclick="switchTab('create',this)">✦ Create Event</button>
+      <div class="tab-cta"></div>
+      <button class="btn-create" onclick="switchTab('create',document.querySelectorAll('.tab-btn')[2])">+ Create
+        Event</button>
+    </div>
+    <!-- ── UPCOMING EVENTS TAB ── -->
+    <div class="content active" id="tab-upcoming">
+      <!-- Filters -->
+      <div class="filters-row">
+        <div class="filter-chip on" onclick="toggleChip(this)">✦ All Events</div>
+        <div class="filter-chip" onclick="toggleChip(this)">🌐 Online</div>
+        <div class="filter-chip" onclick="toggleChip(this)">🆓 Free</div>
+        <div class="filter-chip" onclick="toggleChip(this)">🏆 Tournament</div>
+        <div class="filter-chip" onclick="toggleChip(this)">⚔️ Esports</div>
+        <div class="filter-chip" onclick="toggleChip(this)">🕹️ Game Night</div>
+        <div class="filter-chip" onclick="toggleChip(this)">🎯 Scrims</div>
+        <div class="filter-chip" onclick="toggleChip(this)">📺 Streaming</div>
+      </div>
+      <!-- Featured Event -->
+      <div class="featured-event">
+        <div class="feat-glow"></div>
+        <div class="feat-content">
+          <div>
+            <div class="feat-badge-row">
+              <span class="ev-badge badge-live">● Live Registration</span>
+              <span class="ev-badge badge-free">🆓 Free</span>
+              <span class="ev-badge badge-online">🌐 Online</span>
+            </div>
+            <div class="feat-title">March Hack Sprint 2025</div>
+            <div class="feat-desc">48-hour hackathon open to all skill levels. Build anything — solo or in teams up to
+              4. Prizes worth $2,000 across 3 categories: Best UI, Most Innovative, and Best Use of Gameunity API.</div>
+            <div class="feat-community">
+              <div class="feat-comm-av">⚡</div>
+              <span class="feat-comm-name">Hosted by <strong class="u-extracted-173">Pro Gamers</strong></span>
+            </div>
+          </div>
+          <div class="feat-bottom">
+            <div class="feat-meta-item">🗓 March 7 – 8, 2025</div>
+            <div class="feat-meta-item">⏰ Starts 2:00 PM IST</div>
+            <div class="feat-meta-item">👥 248 registered</div>
+            <div class="feat-meta-item">🏆 $2,000 in prizes</div>
+          </div>
+        </div>
+        <div class="feat-actions">
+          <div class="attendee-stack">
+            <div class="avatar-stack">
+              <div class="av grad-purple">JK</div>
+              <div class="av grad-orange">MP</div>
+              <div class="av grad-green">TC</div>
+              <div class="av grad-pink">LP</div>
+              <div class="av u-extracted-254">+244</div>
+            </div>
+            <div class="attendee-count">248 people registered</div>
+          </div>
+          <div>
+            <div class="seats-left">⚡ 52 seats left</div>
+            <button id="featured-register" class="btn-register u-extracted-141"
+              onclick="registerFeaturedEvent(this)">Register Now</button>
+          </div>
+        </div>
+      </div>
+      <!-- Section Header -->
+      <div class="section-header">
+        <div>
+          <div class="section-title">All Upcoming Events</div>
+          <div class="section-sub u-extracted-255">10 events across your communities</div>
+        </div>
+      </div>
+      <!-- Events Grid -->
+      <div class="events-grid">
+
+        <!-- 1. Tournament — Valorant Pro Cup -->
+        <div class="ev-card delay-05">
+          <div class="ev-card-banner banner-cyan">
+            <div class="ev-card-banner-inner">🎮🎮</div>
+            <div class="ev-card-badges"><span class="ev-badge badge-free">Free</span></div>
+          </div>
+          <div class="ev-card-body">
+            <div class="ev-card-top">
+              <div class="ev-date-box">
+                <div class="ev-date-mon">Mar</div>
+                <div class="ev-date-day">10</div>
+              </div>
+              <div>
+                <div class="ev-card-title">Valorant Pro Cup: Grand Finals</div>
+                <div class="ev-card-comm u-extracted-256">
+                  <div class="ev-comm-av grad-cyan">🎮</div>
+                  <div class="ev-comm-name">GameZone</div>
+                </div>
+              </div>
+            </div>
+            <div class="ev-card-meta">
+              <div class="ev-meta-tag">⏰ 4:00 PM IST</div>
+              <div class="ev-meta-tag">🌐 Online</div>
+              <div class="ev-meta-tag">🏆 Tournament</div>
+            </div>
+            <div class="ev-card-footer">
+              <div class="ev-attendees">👥 520 going</div>
+              <button class="btn-ev" onclick="toggleReg(this)">Register</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Esports — Apex Legends -->
+        <div class="ev-card delay-10">
+          <div class="ev-card-banner" style="background:linear-gradient(135deg,#1a0520,#3d0a35,#1a0530);">
+            <div class="ev-card-banner-inner">⚔️⚔️</div>
+            <div class="ev-card-badges"><span class="ev-badge badge-paid">Ticketed</span></div>
+          </div>
+          <div class="ev-card-body">
+            <div class="ev-card-top">
+              <div class="ev-date-box">
+                <div class="ev-date-mon">Mar</div>
+                <div class="ev-date-day">12</div>
+              </div>
+              <div>
+                <div class="ev-card-title">Apex Legends Showdown: Season Finals</div>
+                <div class="ev-card-comm u-extracted-256">
+                  <div class="ev-comm-av grad-pink">⚔️</div>
+                  <div class="ev-comm-name">FPS Masters</div>
+                </div>
+              </div>
+            </div>
+            <div class="ev-card-meta">
+              <div class="ev-meta-tag">⏰ 6:00 PM IST</div>
+              <div class="ev-meta-tag">🌐 Online</div>
+              <div class="ev-meta-tag">⚔️ Esports</div>
+            </div>
+            <div class="ev-card-footer">
+              <div class="ev-attendees">👥 430 going</div>
+              <button class="btn-ev registered" onclick="toggleReg(this)">✓ Registered</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Game Night — Among Us -->
+        <div class="ev-card delay-15">
+          <div class="ev-card-banner" style="background:linear-gradient(135deg,#0a1a2e,#0c2a45,#081a35);">
+            <div class="ev-card-banner-inner">🕹️🕹️</div>
+            <div class="ev-card-badges"><span class="ev-badge badge-free">Free</span></div>
+          </div>
+          <div class="ev-card-body">
+            <div class="ev-card-top">
+              <div class="ev-date-box">
+                <div class="ev-date-mon">Mar</div>
+                <div class="ev-date-day">14</div>
+              </div>
+              <div>
+                <div class="ev-card-title">Among Us Friday: Community Game Night</div>
+                <div class="ev-card-comm u-extracted-256">
+                  <div class="ev-comm-av grad-cyan">🕹️</div>
+                  <div class="ev-comm-name">GameZone</div>
+                </div>
+              </div>
+            </div>
+            <div class="ev-card-meta">
+              <div class="ev-meta-tag">⏰ 9:00 PM IST</div>
+              <div class="ev-meta-tag">🌐 Online</div>
+              <div class="ev-meta-tag">🕹️ Game Night</div>
+            </div>
+            <div class="ev-card-footer">
+              <div class="ev-attendees">👥 156 going</div>
+              <button class="btn-ev" onclick="toggleReg(this)">Register</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Scrims — CS2 -->
+        <div class="ev-card delay-20">
+          <div class="ev-card-banner" style="background:linear-gradient(135deg,#0d1a0f,#1a3318,#0a200c);">
+            <div class="ev-card-banner-inner">🎯🎯</div>
+            <div class="ev-card-badges"><span class="ev-badge badge-free">Free</span></div>
+          </div>
+          <div class="ev-card-body">
+            <div class="ev-card-top">
+              <div class="ev-date-box">
+                <div class="ev-date-mon">Mar</div>
+                <div class="ev-date-day">15</div>
+              </div>
+              <div>
+                <div class="ev-card-title">CS2 5v5 Scrims: Ranked Practice Night</div>
+                <div class="ev-card-comm u-extracted-256">
+                  <div class="ev-comm-av grad-green">🎯</div>
+                  <div class="ev-comm-name">FPS Masters</div>
+                </div>
+              </div>
+            </div>
+            <div class="ev-card-meta">
+              <div class="ev-meta-tag">⏰ 8:00 PM IST</div>
+              <div class="ev-meta-tag">🌐 Online</div>
+              <div class="ev-meta-tag">🎯 Scrims</div>
+            </div>
+            <div class="ev-card-footer">
+              <div class="ev-attendees">👥 48 going</div>
+              <button class="btn-ev" onclick="toggleReg(this)">Register</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Streaming — Twitch Fest -->
+        <div class="ev-card delay-25">
+          <div class="ev-card-banner" style="background:linear-gradient(135deg,#1a0a2e,#2e1855,#1a0a3a);">
+            <div class="ev-card-banner-inner">📺📺</div>
+            <div class="ev-card-badges"><span class="ev-badge badge-online">Online</span></div>
+          </div>
+          <div class="ev-card-body">
+            <div class="ev-card-top">
+              <div class="ev-date-box">
+                <div class="ev-date-mon">Mar</div>
+                <div class="ev-date-day">16</div>
+              </div>
+              <div>
+                <div class="ev-card-title">Twitch Stream Fest: 24hr Co-op Marathon</div>
+                <div class="ev-card-comm u-extracted-256">
+                  <div class="ev-comm-av grad-violet">📺</div>
+                  <div class="ev-comm-name">SpeedRunners</div>
+                </div>
+              </div>
+            </div>
+            <div class="ev-card-meta">
+              <div class="ev-meta-tag">⏰ 12:00 PM IST</div>
+              <div class="ev-meta-tag">🌐 Online</div>
+              <div class="ev-meta-tag">📺 Streaming</div>
+            </div>
+            <div class="ev-card-footer">
+              <div class="ev-attendees">👥 280 going</div>
+              <button class="btn-ev" onclick="toggleReg(this)">Register</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. Tournament — PUBG -->
+        <div class="ev-card delay-30">
+          <div class="ev-card-banner" style="background:linear-gradient(135deg,#1a1505,#2e2308,#1a1505);">
+            <div class="ev-card-banner-inner">🏆🏆</div>
+            <div class="ev-card-badges"><span class="ev-badge badge-paid">Ticketed</span></div>
+          </div>
+          <div class="ev-card-body">
+            <div class="ev-card-top">
+              <div class="ev-date-box">
+                <div class="ev-date-mon">Mar</div>
+                <div class="ev-date-day">18</div>
+              </div>
+              <div>
+                <div class="ev-card-title">PUBG Squad Clash: $500 Prize Pool</div>
+                <div class="ev-card-comm u-extracted-256">
+                  <div class="ev-comm-av grad-orange">🏆</div>
+                  <div class="ev-comm-name">Pro Gamers</div>
+                </div>
+              </div>
+            </div>
+            <div class="ev-card-meta">
+              <div class="ev-meta-tag">⏰ 3:00 PM IST</div>
+              <div class="ev-meta-tag">🌐 Online</div>
+              <div class="ev-meta-tag">🏆 Tournament</div>
+            </div>
+            <div class="ev-card-footer">
+              <div class="ev-attendees">👥 340 going</div>
+              <button class="btn-ev registered" onclick="toggleReg(this)">✓ Registered</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7. Game Night — Minecraft -->
+        <div class="ev-card delay-05">
+          <div class="ev-card-banner" style="background:linear-gradient(135deg,#0a1f14,#0f3320,#081a10);">
+            <div class="ev-card-banner-inner">🕹️🕹️</div>
+            <div class="ev-card-badges"><span class="ev-badge badge-free">Free</span></div>
+          </div>
+          <div class="ev-card-body">
+            <div class="ev-card-top">
+              <div class="ev-date-box">
+                <div class="ev-date-mon">Mar</div>
+                <div class="ev-date-day">20</div>
+              </div>
+              <div>
+                <div class="ev-card-title">Minecraft Build Wars: Creative Showdown</div>
+                <div class="ev-card-comm u-extracted-256">
+                  <div class="ev-comm-av grad-green">🕹️</div>
+                  <div class="ev-comm-name">RPG Tavern</div>
+                </div>
+              </div>
+            </div>
+            <div class="ev-card-meta">
+              <div class="ev-meta-tag">⏰ 7:00 PM IST</div>
+              <div class="ev-meta-tag">🌐 Online</div>
+              <div class="ev-meta-tag">🕹️ Game Night</div>
+            </div>
+            <div class="ev-card-footer">
+              <div class="ev-attendees">👥 92 going</div>
+              <button class="btn-ev" onclick="toggleReg(this)">Register</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 8. Esports — League of Legends -->
+        <div class="ev-card delay-10">
+          <div class="ev-card-banner" style="background:linear-gradient(135deg,#0d1535,#1a0d3a,#0c2040);">
+            <div class="ev-card-banner-inner">⚔️⚔️</div>
+            <div class="ev-card-badges"><span class="ev-badge badge-online">Online</span></div>
+          </div>
+          <div class="ev-card-body">
+            <div class="ev-card-top">
+              <div class="ev-date-box">
+                <div class="ev-date-mon">Mar</div>
+                <div class="ev-date-day">22</div>
+              </div>
+              <div>
+                <div class="ev-card-title">League of Legends: Ranked Showdown</div>
+                <div class="ev-card-comm u-extracted-256">
+                  <div class="ev-comm-av grad-purple">⚔️</div>
+                  <div class="ev-comm-name">Strategy Gods</div>
+                </div>
+              </div>
+            </div>
+            <div class="ev-card-meta">
+              <div class="ev-meta-tag">⏰ 5:00 PM IST</div>
+              <div class="ev-meta-tag">🌐 Online</div>
+              <div class="ev-meta-tag">⚔️ Esports</div>
+            </div>
+            <div class="ev-card-footer">
+              <div class="ev-attendees">👥 215 going</div>
+              <button class="btn-ev" onclick="toggleReg(this)">Register</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 9. Scrims — Overwatch 2 -->
+        <div class="ev-card delay-15">
+          <div class="ev-card-banner" style="background:linear-gradient(135deg,#051b2c,#0a3355,#041525);">
+            <div class="ev-card-banner-inner">🎯🎯</div>
+            <div class="ev-card-badges"><span class="ev-badge badge-free">Free</span></div>
+          </div>
+          <div class="ev-card-body">
+            <div class="ev-card-top">
+              <div class="ev-date-box">
+                <div class="ev-date-mon">Mar</div>
+                <div class="ev-date-day">24</div>
+              </div>
+              <div>
+                <div class="ev-card-title">Overwatch 2 Scrims: Tank Meta Practice</div>
+                <div class="ev-card-comm u-extracted-256">
+                  <div class="ev-comm-av grad-cyan">🎯</div>
+                  <div class="ev-comm-name">FPS Masters</div>
+                </div>
+              </div>
+            </div>
+            <div class="ev-card-meta">
+              <div class="ev-meta-tag">⏰ 10:00 PM IST</div>
+              <div class="ev-meta-tag">🌐 Online</div>
+              <div class="ev-meta-tag">🎯 Scrims</div>
+            </div>
+            <div class="ev-card-footer">
+              <div class="ev-attendees">👥 36 going</div>
+              <button class="btn-ev" onclick="toggleReg(this)">Register</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 10. Streaming — YouTube Gaming -->
+        <div class="ev-card delay-20">
+          <div class="ev-card-banner banner-pink">
+            <div class="ev-card-banner-inner">📺📺</div>
+            <div class="ev-card-badges"><span class="ev-badge badge-free">Free</span></div>
+          </div>
+          <div class="ev-card-body">
+            <div class="ev-card-top">
+              <div class="ev-date-box">
+                <div class="ev-date-mon">Mar</div>
+                <div class="ev-date-day">26</div>
+              </div>
+              <div>
+                <div class="ev-card-title">YouTube Gaming Marathon: Charity Stream</div>
+                <div class="ev-card-comm u-extracted-256">
+                  <div class="ev-comm-av grad-pink">📺</div>
+                  <div class="ev-comm-name">SpeedRunners</div>
+                </div>
+              </div>
+            </div>
+            <div class="ev-card-meta">
+              <div class="ev-meta-tag">⏰ 11:00 AM IST</div>
+              <div class="ev-meta-tag">🌐 Online</div>
+              <div class="ev-meta-tag">📺 Streaming</div>
+            </div>
+            <div class="ev-card-footer">
+              <div class="ev-attendees">👥 178 going</div>
+              <button class="btn-ev" onclick="toggleReg(this)">Register</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Load More Button -->
+        <div class="load-more-wrap" style="grid-column: 1 / -1; display:flex; justify-content:center; padding-top:12px;">
+          <button id="load-more-events-btn" class="btn-ghost" onclick="toggleLoadMoreEvents()">Load more</button>
+        </div>
+
+      </div>
+    </div>
+  <!-- ── MY REGISTRATIONS TAB ── -->
+  <div class="content" id="tab-registered">
+    <div class="section-header">
+      <div>
+        <div class="section-title">🎟 My Registrations</div>
+        <div class="section-sub u-extracted-255">3 upcoming events you're registered for</div>
+      </div>
+    </div>
+    <div class="reg-list">
+
+      <!-- Card 1 -->
+      <div class="reg-card">
+        <div class="reg-card-banner" style="background:linear-gradient(135deg,#0d1535,#1a0d3a,#0c2040);">
+          <div class="reg-card-banner-inner">🏆🏆</div>
+          <div class="reg-card-badges"><span class="ev-badge badge-free">Free</span><span
+              class="ev-badge badge-online">Online</span></div>
+        </div>
+        <div class="reg-card-body">
+          <div class="reg-card-top">
+            <div class="reg-date-box">
+              <div class="reg-mon">Mar</div>
+              <div class="reg-day">07</div>
+            </div>
+            <div>
+              <div class="reg-title">March Hack Sprint 2025</div>
+              <div class="reg-comm">
+                <div class="reg-comm-av grad-purple">⚡</div>
+                <div class="reg-comm-name">Pro Gamers</div>
+              </div>
+            </div>
+          </div>
+          <div class="reg-meta">
+            <div class="reg-meta-item">⏰ 2:00 PM IST</div>
+            <div class="reg-meta-item">🌐 Online</div>
+            <div class="reg-meta-item">🏆 Hackathon</div>
+          </div>
+          <div class="reg-status-row">
+            <span class="reg-status status-confirmed">✓ Confirmed</span>
+            <span class="ticket-id">TKT-DNX-20250307-4821</span>
+          </div>
+          <div class="reg-card-footer">
+            <div class="ev-attendees">👥 248 going</div>
+            <div class="reg-actions">
+              <button class="btn-add-cal">📅 Calendar</button>
+              <button class="btn-cancel">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="reg-card">
+        <div class="reg-card-banner" style="background:linear-gradient(135deg,#0c1a2e,#1a1040,#0d2040);">
+          <div class="reg-card-banner-inner">🤖🤖</div>
+          <div class="reg-card-badges"><span class="ev-badge badge-online">Online</span></div>
+        </div>
+        <div class="reg-card-body">
+          <div class="reg-card-top">
+            <div class="reg-date-box">
+              <div class="reg-mon">Mar</div>
+              <div class="reg-day">12</div>
+            </div>
+            <div>
+              <div class="reg-title">Building with LLMs: Practical AMA</div>
+              <div class="reg-comm">
+                <div class="reg-comm-av" style="background:linear-gradient(135deg,#06b6d4,#0891b2);">🤖</div>
+                <div class="reg-comm-name">AI &amp; ML Hub</div>
+              </div>
+            </div>
+          </div>
+          <div class="reg-meta">
+            <div class="reg-meta-item">⏰ 7:00 PM IST</div>
+            <div class="reg-meta-item">🌐 Online</div>
+            <div class="reg-meta-item">🎙 AMA</div>
+          </div>
+          <div class="reg-status-row">
+            <span class="reg-status status-upcoming">⏳ Upcoming</span>
+            <span class="ticket-id">TKT-AIH-20250312-1047</span>
+          </div>
+          <div class="reg-card-footer">
+            <div class="ev-attendees">👥 312 going</div>
+            <div class="reg-actions">
+              <button class="btn-add-cal">📅 Calendar</button>
+              <button class="btn-cancel">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="reg-card">
+        <div class="reg-card-banner" style="background:linear-gradient(135deg,#1a0d2e,#2d1040,#1a0d3a);">
+          <div class="reg-card-banner-inner">📚📚</div>
+          <div class="reg-card-badges"><span class="ev-badge badge-online">Online</span></div>
+        </div>
+        <div class="reg-card-body">
+          <div class="reg-card-top">
+            <div class="reg-date-box">
+              <div class="reg-mon">Mar</div>
+              <div class="reg-day">22</div>
+            </div>
+            <div>
+              <div class="reg-title">March Book Club: Atomic Habits Deep Dive</div>
+              <div class="reg-comm">
+                <div class="reg-comm-av grad-violet">📚</div>
+                <div class="reg-comm-name">Strategy Gods</div>
+              </div>
+            </div>
+          </div>
+          <div class="reg-meta">
+            <div class="reg-meta-item">⏰ 6:00 PM IST</div>
+            <div class="reg-meta-item">🌐 Online</div>
+            <div class="reg-meta-item">📖 Discussion</div>
+          </div>
+          <div class="reg-status-row">
+            <span class="reg-status status-confirmed">✓ Confirmed</span>
+            <span class="ticket-id">TKT-BCP-20250322-3390</span>
+          </div>
+          <div class="reg-card-footer">
+            <div class="ev-attendees">👥 35 going</div>
+            <div class="reg-actions">
+              <button class="btn-add-cal">📅 Calendar</button>
+              <button class="btn-cancel">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
-</aside>
-<!-- ─── MAIN ─── -->
-<div class="main">
-<header class="header">
-<div class="header-title">Events</div>
-<div class="header-actions">
-<div class="header-avatar">AM</div>
-</div>
-</header>
-<!-- Tab Bar -->
-<div class="tab-bar">
-<button class="tab-btn active" onclick="switchTab('upcoming',this)">📅 Upcoming <span class="tab-count">24</span></button>
-<button class="tab-btn" onclick="switchTab('registered',this)">🎟 My Registrations <span class="tab-count">3</span></button>
-<button class="tab-btn" onclick="switchTab('create',this)">✦ Create Event</button>
-<div class="tab-cta"></div>
-<button class="btn-create" onclick="switchTab('create',document.querySelectorAll('.tab-btn')[2])">+ Create Event</button>
-</div>
-<!-- ── UPCOMING EVENTS TAB ── -->
-<div class="content active" id="tab-upcoming">
-<!-- Filters -->
-<div class="filters-row">
-<div class="filter-chip on" onclick="toggleChip(this)">✦ All Events</div>
-<div class="filter-chip" onclick="toggleChip(this)">🌐 Online</div>
-<div class="filter-chip" onclick="toggleChip(this)">📍 In-Person</div>
-<div class="filter-chip" onclick="toggleChip(this)">🆓 Free</div>
-<div class="filter-chip" onclick="toggleChip(this)">🏆 Hackathon</div>
-<div class="filter-chip" onclick="toggleChip(this)">🎓 Workshop</div>
-<div class="filter-chip" onclick="toggleChip(this)">🎙 AMA</div>
-</div>
-<!-- Featured Event -->
-<div class="featured-event">
-<div class="feat-glow"></div>
-<div class="feat-content">
-<div>
-<div class="feat-badge-row">
-<span class="ev-badge badge-live">● Live Registration</span>
-<span class="ev-badge badge-free">🆓 Free</span>
-<span class="ev-badge badge-online">🌐 Online</span>
-</div>
-<div class="feat-title">March Hack Sprint 2025</div>
-<div class="feat-desc">48-hour hackathon open to all skill levels. Build anything — solo or in teams up to 4. Prizes worth $2,000 across 3 categories: Best UI, Most Innovative, and Best Use of Gameunity API.</div>
-<div class="feat-community">
-<div class="feat-comm-av">⚡</div>
-<span class="feat-comm-name">Hosted by <strong class="u-extracted-173">Pro Gamers</strong></span>
-</div>
-</div>
-<div class="feat-bottom">
-<div class="feat-meta-item">🗓 March 7 – 8, 2025</div>
-<div class="feat-meta-item">⏰ Starts 2:00 PM IST</div>
-<div class="feat-meta-item">👥 248 registered</div>
-<div class="feat-meta-item">🏆 $2,000 in prizes</div>
-</div>
-</div>
-<div class="feat-actions">
-<div class="attendee-stack">
-<div class="avatar-stack">
-<div class="av grad-purple">JK</div>
-<div class="av grad-orange">MP</div>
-<div class="av grad-green">TC</div>
-<div class="av grad-pink">LP</div>
-<div class="av u-extracted-254">+244</div>
-</div>
-<div class="attendee-count">248 people registered</div>
-</div>
-<div>
-<div class="seats-left">⚡ 52 seats left</div>
-<button id="featured-register" class="btn-register u-extracted-141" onclick="registerFeaturedEvent(this)">Register Now</button>
-</div>
-</div>
-</div>
-<!-- Section Header -->
-<div class="section-header">
-<div><div class="section-title">All Upcoming Events</div><div class="section-sub u-extracted-255">24 events across your communities</div></div>
-</div>
-<!-- Events Grid -->
-<div class="events-grid">
-<div class="ev-card delay-05">
-<div class="ev-card-banner u-extracted-244">
-<div class="ev-card-banner-inner">🎨🎨</div>
-<div class="ev-card-badges"><span class="ev-badge badge-free">Free</span></div>
-</div>
-<div class="ev-card-body">
-<div class="ev-card-top">
-<div class="ev-date-box"><div class="ev-date-mon">Mar</div><div class="ev-date-day">10</div></div>
-<div><div class="ev-card-title">UI Design Workshop: Components That Scale</div><div class="ev-card-comm u-extracted-256"><div class="ev-comm-av grad-orange">🎨</div><div class="ev-comm-name">RPG Tavern</div></div></div>
-</div>
-<div class="ev-card-meta">
-<div class="ev-meta-tag">⏰ 5:00 PM IST</div>
-<div class="ev-meta-tag">📍 Chennai</div>
-<div class="ev-meta-tag">🎓 Workshop</div>
-</div>
-<div class="ev-card-footer">
-<div class="ev-attendees">👥 64 going</div>
-<button class="btn-ev" onclick="toggleReg(this)">Register</button>
-</div>
-</div>
-</div>
-<div class="ev-card delay-10">
-<div class="ev-card-banner u-extracted-249">
-<div class="ev-card-banner-inner">🤖🤖</div>
-<div class="ev-card-badges"><span class="ev-badge badge-online">Online</span></div>
-</div>
-<div class="ev-card-body">
-<div class="ev-card-top">
-<div class="ev-date-box"><div class="ev-date-mon">Mar</div><div class="ev-date-day">12</div></div>
-<div><div class="ev-card-title">Building with LLMs: Practical AMA</div><div class="ev-card-comm u-extracted-256"><div class="ev-comm-av u-extracted-208">🤖</div><div class="ev-comm-name">AI &amp; ML Hub</div></div></div>
-</div>
-<div class="ev-card-meta">
-<div class="ev-meta-tag">⏰ 7:00 PM IST</div>
-<div class="ev-meta-tag">🌐 Online</div>
-<div class="ev-meta-tag">🎙 AMA</div>
-</div>
-<div class="ev-card-footer">
-<div class="ev-attendees">👥 312 going</div>
-<button class="btn-ev registered" onclick="toggleReg(this)">✓ Registered</button>
-</div>
-</div>
-</div>
-<div class="ev-card delay-15">
-<div class="ev-card-banner banner-pink">
-<div class="ev-card-banner-inner">🎵🎵</div>
-<div class="ev-card-badges"><span class="ev-badge badge-paid">Ticketed</span></div>
-</div>
-<div class="ev-card-body">
-<div class="ev-card-top">
-<div class="ev-date-box"><div class="ev-date-mon">Mar</div><div class="ev-date-day">14</div></div>
-<div><div class="ev-card-title">Beat Battle Night Vol. 3</div><div class="ev-card-comm u-extracted-256"><div class="ev-comm-av grad-pink">🎵</div><div class="ev-comm-name">SpeedRunners</div></div></div>
-</div>
-<div class="ev-card-meta">
-<div class="ev-meta-tag">⏰ 8:00 PM IST</div>
-<div class="ev-meta-tag">🌐 Online</div>
-<div class="ev-meta-tag">🎤 Live</div>
-</div>
-<div class="ev-card-footer">
-<div class="ev-attendees">👥 89 going</div>
-<button class="btn-ev" onclick="toggleReg(this)">Register</button>
-</div>
-</div>
-</div>
-<div class="ev-card delay-20">
-<div class="ev-card-banner u-extracted-253">
-<div class="ev-card-banner-inner">🌿🌿</div>
-<div class="ev-card-badges"><span class="ev-badge badge-free">Free</span><span class="ev-badge badge-in-person">In-Person</span></div>
-</div>
-<div class="ev-card-body">
-<div class="ev-card-top">
-<div class="ev-date-box"><div class="ev-date-mon">Mar</div><div class="ev-date-day">16</div></div>
-<div><div class="ev-card-title">FPS Masters City Cleanup Drive</div><div class="ev-card-comm u-extracted-256"><div class="ev-comm-av grad-green">🌿</div><div class="ev-comm-name">FPS Masters</div></div></div>
-</div>
-<div class="ev-card-meta">
-<div class="ev-meta-tag">⏰ 9:00 AM IST</div>
-<div class="ev-meta-tag">📍 Chennai</div>
-<div class="ev-meta-tag">🌱 Community</div>
-</div>
-<div class="ev-card-footer">
-<div class="ev-attendees">👥 41 going</div>
-<button class="btn-ev" onclick="toggleReg(this)">Register</button>
-</div>
-</div>
-</div>
-<div class="ev-card delay-25">
-<div class="ev-card-banner banner-cyan">
-<div class="ev-card-banner-inner">🎮🎮</div>
-<div class="ev-badge badge-free u-extracted-257">Free</div>
-</div>
-<div class="ev-card-body">
-<div class="ev-card-top">
-<div class="ev-date-box"><div class="ev-date-mon">Mar</div><div class="ev-date-day">18</div></div>
-<div><div class="ev-card-title">GameZone Tournament: Valorant Pro Cup</div><div class="ev-card-comm u-extracted-256"><div class="ev-comm-av grad-cyan">🎮</div><div class="ev-comm-name">GameZone</div></div></div>
-</div>
-<div class="ev-card-meta">
-<div class="ev-meta-tag">⏰ 4:00 PM IST</div>
-<div class="ev-meta-tag">🌐 Online</div>
-<div class="ev-meta-tag">🏆 Tournament</div>
-</div>
-<div class="ev-card-footer">
-<div class="ev-attendees">👥 520 going</div>
-<button class="btn-ev" onclick="toggleReg(this)">Register</button>
-</div>
-</div>
-</div>
-<div class="ev-card delay-30">
-<div class="ev-card-banner banner-violet">
-<div class="ev-card-banner-inner">📚📚</div>
-<div class="ev-card-badges"><span class="ev-badge badge-online">Online</span></div>
-</div>
-<div class="ev-card-body">
-<div class="ev-card-top">
-<div class="ev-date-box"><div class="ev-date-mon">Mar</div><div class="ev-date-day">22</div></div>
-<div><div class="ev-card-title">March Book Club: Atomic Habits Deep Dive</div><div class="ev-card-comm u-extracted-256"><div class="ev-comm-av grad-violet">📚</div><div class="ev-comm-name">Strategy Gods</div></div></div>
-</div>
-<div class="ev-card-meta">
-<div class="ev-meta-tag">⏰ 6:00 PM IST</div>
-<div class="ev-meta-tag">🌐 Online</div>
-<div class="ev-meta-tag">📖 Discussion</div>
-</div>
-<div class="ev-card-footer">
-<div class="ev-attendees">👥 35 going</div>
-<button class="btn-ev registered" onclick="toggleReg(this)">✓ Registered</button>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- ── MY REGISTRATIONS TAB ── -->
-<div class="content" id="tab-registered">
-<div class="section-header">
-<div><div class="section-title">🎟 My Registrations</div><div class="section-sub u-extracted-255">3 upcoming events you're registered for</div></div>
-</div>
-<div class="reg-list">
-<div class="reg-card">
-<div class="reg-date-box u-extracted-258"><div class="reg-mon u-extracted-149">Mar</div><div class="reg-day">07</div></div>
-<div class="reg-info">
-<div class="reg-title">March Hack Sprint 2025</div>
-<div class="reg-meta">
-<div class="reg-meta-item">⏰ Mar 7–8 · 2:00 PM IST</div>
-<div class="reg-meta-item">🌐 Online</div>
-<div class="reg-meta-item">⚡ Pro Gamers</div>
-<div class="reg-meta-item">🏆 $2,000 prizes</div>
-</div>
-<div class="reg-status-row">
-<span class="reg-status status-confirmed">✓ Confirmed</span>
-<span class="ticket-id">TKT-DNX-20250307-4821</span>
-</div>
-</div>
-<div class="reg-actions">
-<button class="btn-add-cal">📅 Add to Calendar</button>
-<button class="btn-cancel">Cancel</button>
-</div>
-</div>
-<div class="reg-card">
-<div class="reg-date-box"><div class="reg-mon">Mar</div><div class="reg-day">12</div></div>
-<div class="reg-info">
-<div class="reg-title">Building with LLMs: Practical AMA</div>
-<div class="reg-meta">
-<div class="reg-meta-item">⏰ Mar 12 · 7:00 PM IST</div>
-<div class="reg-meta-item">🌐 Online</div>
-<div class="reg-meta-item">🤖 AI &amp; ML Hub</div>
-<div class="reg-meta-item">🎙 AMA Session</div>
-</div>
-<div class="reg-status-row">
-<span class="reg-status status-upcoming">⏳ Upcoming</span>
-<span class="ticket-id">TKT-AIH-20250312-1047</span>
-</div>
-</div>
-<div class="reg-actions">
-<button class="btn-add-cal">📅 Add to Calendar</button>
-<button class="btn-cancel">Cancel</button>
-</div>
-</div>
-<div class="reg-card">
-<div class="reg-date-box"><div class="reg-mon">Mar</div><div class="reg-day">22</div></div>
-<div class="reg-info">
-<div class="reg-title">March Book Club: Atomic Habits Deep Dive</div>
-<div class="reg-meta">
-<div class="reg-meta-item">⏰ Mar 22 · 6:00 PM IST</div>
-<div class="reg-meta-item">🌐 Online</div>
-<div class="reg-meta-item">📚 Strategy Gods</div>
-<div class="reg-meta-item">📖 Discussion</div>
-</div>
-<div class="reg-status-row">
-<span class="reg-status status-confirmed">✓ Confirmed</span>
-<span class="ticket-id">TKT-BCP-20250322-3390</span>
-</div>
-</div>
-<div class="reg-actions">
-<button class="btn-add-cal">📅 Add to Calendar</button>
-<button class="btn-cancel">Cancel</button>
-</div>
-</div>
-</div>
-</div>
-<!-- ── CREATE EVENT TAB ── -->
-<div class="content" id="tab-create">
-<div class="create-layout">
-<div class="form-card">
-<div class="form-section-title">✦ Create a New Event</div>
-<div class="field">
-<label>Event Title *</label>
-<input id="evTitle" oninput="updatePreview()" placeholder="e.g. MOBA Deep Dive Workshop" type="text"/>
-</div>
-<div class="field">
-<label>Description</label>
-<textarea placeholder="Tell attendees what to expect…" rows="3"></textarea>
-</div>
-<div class="field-row">
-<div class="field">
-<label>Date *</label>
-<input id="evDate" oninput="updatePreview()" type="date"/>
-</div>
-<div class="field">
-<label>Time *</label>
-<input id="evTime" oninput="updatePreview()" type="time"/>
-</div>
-</div>
-<div class="field">
-<label>Event Type</label>
-<div class="type-toggle">
-<div class="type-opt on" onclick="setType(this,'Online')">🌐 Online</div>
-<div class="type-opt" onclick="setType(this,'In-Person')">📍 In-Person</div>
-<div class="type-opt" onclick="setType(this,'Hybrid')">🔀 Hybrid</div>
-</div>
-</div>
-<div class="field-row">
-<div class="field">
-<label>Community</label>
-<select id="evCommunity">
-<option>⚡ Pro Gamers</option>
-<option>🎨 RPG Tavern</option>
-<option>🎮 GameZone</option>
-<option>🌿 FPS Masters</option>
-<option>🎵 SpeedRunners</option>
-</select>
-</div>
-<div class="field">
-<label>Max Attendees</label>
-<input id="evMax" placeholder="Leave blank for unlimited" type="number"/>
-</div>
-</div>
-<div class="field">
-<label>Category</label>
-<select id="evCategory">
-<option>🏆 Hackathon</option>
-<option>🎓 Workshop</option>
-<option>🎙 AMA / Talk</option>
-<option>🎮 Gaming / Tournament</option>
-<option>📖 Discussion</option>
-<option>🎉 Social / Meetup</option>
-</select>
-</div>
-<div class="field">
-<label>Cover Image *</label>
-<div id="uploadArea" class="upload-area" tabindex="0" role="button" aria-label="Upload cover image">
-  <div class="upload-icon">🖼</div>
-  <div class="upload-text" id="uploadText">Drag &amp; drop or click to upload</div>
-  <div class="upload-sub">PNG, JPG or WebP · Max 5MB · Recommended 1200×630px</div>
-</div>
-<input id="evCover" type="file" accept="image/png,image/jpeg,image/webp" style="display:none" />
-<div id="uploadPreview" class="upload-preview" style="display:none;margin-top:10px;"></div>
-</div>
-<div class="form-actions">
-<button id="saveDraftBtn" class="btn-draft">Save Draft</button>
-<button id="publishEventBtn" class="btn-publish">Publish Event</button>
-</div>
-</div>
-<!-- Preview + Tips -->
-<div class="preview-card-wrap">
-<div class="preview-label">Live Preview</div>
-<div class="preview-card">
-<div class="preview-banner">📅</div>
-<div class="preview-body">
-<div class="preview-title" id="prevTitle">Your event title</div>
-<div class="preview-meta">
-<div class="preview-meta-row" id="prevDate">🗓 Select a date and time</div>
-<div class="preview-meta-row">🌐 Online · ⚡ Pro Gamers</div>
-<div class="preview-meta-row">🏆 Hackathon · 🆓 Free</div>
-</div>
-</div>
-</div>
-<div class="tips-card">
-<div class="tips-title">✦ Tips for great events</div>
-<div class="tip-row"><div class="tip-dot"></div>Use a clear, descriptive title that states what attendees will learn or do.</div>
-<div class="tip-row"><div class="tip-dot"></div>Add a cover image — events with images get 3× more registrations.</div>
-<div class="tip-row"><div class="tip-dot"></div>Set a max capacity to create urgency and manage expectations.</div>
-<div class="tip-row"><div class="tip-dot"></div>Post in relevant channels to announce your event after publishing.</div>
-</div>
-</div>
-</div>
-</div>
-<div class="load-more-wrap" style="margin-top:20px;">
-  <button id="load-more-events-btn" class="btn-ghost" onclick="toggleLoadMoreEvents()">Load more</button>
-</div>
-</div><!-- end main -->
-<script src="../js/core/auth.js"></script>
-<script src="../js/components/rbac-nav.js"></script>
-<script src="../js/pages/events.js"></script>
-<script src="../js/components/notifications.js"></script>
+  <!-- ── CREATE EVENT TAB ── -->
+  <div class="content" id="tab-create">
+    <div class="create-layout">
+      <div class="form-card">
+        <div class="form-section-title">✦ Create a New Event</div>
+        <div class="field">
+          <label>Event Title *</label>
+          <input id="evTitle" oninput="updatePreview()" placeholder="e.g. MOBA Deep Dive Workshop" type="text" />
+        </div>
+        <div class="field">
+          <label>Description</label>
+          <textarea placeholder="Tell attendees what to expect…" rows="3"></textarea>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Date *</label>
+            <input id="evDate" oninput="updatePreview()" type="date" />
+          </div>
+          <div class="field">
+            <label>Time *</label>
+            <input id="evTime" oninput="updatePreview()" type="time" />
+          </div>
+        </div>
+        <div class="field">
+          <label>Event Type</label>
+          <div class="type-toggle">
+            <div class="type-opt on" onclick="setType(this,'Online')">🌐 Online</div>
+            <div class="type-opt" onclick="setType(this,'In-Person')">📍 In-Person</div>
+            <div class="type-opt" onclick="setType(this,'Hybrid')">🔀 Hybrid</div>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Community</label>
+            <select id="evCommunity">
+              <option>⚡ Pro Gamers</option>
+              <option>🎨 RPG Tavern</option>
+              <option>🎮 GameZone</option>
+              <option>🌿 FPS Masters</option>
+              <option>🎵 SpeedRunners</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Max Attendees</label>
+            <input id="evMax" placeholder="Leave blank for unlimited" type="number" />
+          </div>
+        </div>
+        <div class="field">
+          <label>Category</label>
+          <select id="evCategory">
+            <option>🏆 Hackathon</option>
+            <option>🎓 Workshop</option>
+            <option>🎙 AMA / Talk</option>
+            <option>🎮 Gaming / Tournament</option>
+            <option>📖 Discussion</option>
+            <option>🎉 Social / Meetup</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Cover Image *</label>
+          <div id="uploadArea" class="upload-area" tabindex="0" role="button" aria-label="Upload cover image">
+            <div class="upload-icon">🖼</div>
+            <div class="upload-text" id="uploadText">Drag &amp; drop or click to upload</div>
+            <div class="upload-sub">PNG, JPG or WebP · Max 5MB · Recommended 1200×630px</div>
+          </div>
+          <input id="evCover" type="file" accept="image/png,image/jpeg,image/webp" style="display:none" />
+          <div id="uploadPreview" class="upload-preview" style="display:none;margin-top:10px;"></div>
+        </div>
+        <div class="form-actions">
+          <button id="saveDraftBtn" class="btn-draft">Save Draft</button>
+          <button id="publishEventBtn" class="btn-publish">Publish Event</button>
+        </div>
+      </div>
+      <!-- Preview + Tips -->
+      <div class="preview-card-wrap">
+        <div class="preview-label">Live Preview</div>
+        <div class="preview-card">
+          <div class="preview-banner">📅</div>
+          <div class="preview-body">
+            <div class="preview-title" id="prevTitle">Your event title</div>
+            <div class="preview-meta">
+              <div class="preview-meta-row" id="prevDate">🗓 Select a date and time</div>
+              <div class="preview-meta-row">🌐 Online · ⚡ Pro Gamers</div>
+              <div class="preview-meta-row">🏆 Hackathon · 🆓 Free</div>
+            </div>
+          </div>
+        </div>
+        <div class="tips-card">
+          <div class="tips-title">✦ Tips for great events</div>
+          <div class="tip-row">
+            <div class="tip-dot"></div>Use a clear, descriptive title that states what attendees will learn or do.
+          </div>
+          <div class="tip-row">
+            <div class="tip-dot"></div>Add a cover image — events with images get 3× more registrations.
+          </div>
+          <div class="tip-row">
+            <div class="tip-dot"></div>Set a max capacity to create urgency and manage expectations.
+          </div>
+          <div class="tip-row">
+            <div class="tip-dot"></div>Post in relevant channels to announce your event after publishing.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div><!-- end main -->
+  <script src="../js/core/auth.js"></script>
+  <script src="../js/components/rbac-nav.js"></script>
+  <script src="../js/pages/events.js"></script>
+  <script src="../js/components/notifications.js"></script>
 </body>
+
 </html>
