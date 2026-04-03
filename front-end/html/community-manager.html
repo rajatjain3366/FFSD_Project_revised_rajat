@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <title>Gameunity – Community Manager Panel</title>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=JetBrains+Mono:wght@400;500&display=swap"
-    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  
   <link href="../css/global.css" rel="stylesheet" />
-  <link href="../css/pages/community-manager.css" rel="stylesheet" />
   <link href="../css/pages/rbac-nav.css" rel="stylesheet" />
+  <link href="../css/pages/community-manager.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -20,38 +18,37 @@
       <span class="tb-logo-name">Gameunity</span>
     </div>
     <div class="tb-sep"></div>
-    <div class="tb-comm">
+    
+    <div class="tb-comm" style="cursor: pointer;" onclick="window.location.href='community-page.html'" title="Go to Community Page">
       <div class="tb-comm-icon">⚡</div>
       <span class="tb-comm-name" id="topBarCommunityName">Pro Gamers</span>
       <span class="tb-badge">Owner Panel</span>
     </div>
+    
     <div class="tb-right">
-      <div class="tb-btn" onclick="viewAsMember()">👁 View as Member</div>
+      <div class="tb-btn" onclick="window.location.href='community-page.html'">👁 View as Member</div>
       <div class="tb-btn" onclick="toast('🔗 Invite Link copied!')">🔗 Share</div>
-      <div class="tb-btn primary" onclick="showModal()">+ Add Channel</div>
-      <div class="tb-av" onclick="openProfileSettings()"
-        style="background: linear-gradient(135deg, var(--gold), #d97706); border-color: rgba(245, 158, 11, 0.4);">JK
-      </div>
+      <div class="tb-btn primary" onclick="showModal('modalBg')">+ Add Channel</div>
+      
+      <div class="tb-av" style="background: linear-gradient(135deg, var(--gold), #d97706); border-color: rgba(245, 158, 11, 0.4); cursor: pointer;" onclick="window.location.href='profile-settings.html'" title="Profile Settings">JK</div>
     </div>
   </div>
 
   <div class="body-wrap">
     <div class="main-content">
-
       <div class="view active" id="view-settings">
         <div class="section-title">⚙️ Community Settings</div>
+        
         <div class="settings-layout">
-
           <div class="settings-nav">
-            <div class="settings-nav-item active" onclick="switchSettingsTab('basic', this)">🏠 Community Settings</div>
-            <div class="settings-nav-item" onclick="switchSettingsTab('members', this)">👥 Member Management</div>
-            <div class="settings-nav-item" onclick="switchSettingsTab('channels', this)">📢 Channel Management</div>
-            <div class="settings-nav-item" onclick="switchSettingsTab('moderation', this)">🛡️ Moderation Tools</div>
-            <div class="settings-nav-item" onclick="switchSettingsTab('events', this)">📅 Events & Announcements</div>
-            <div class="settings-nav-item" onclick="switchSettingsTab('analytics', this)">📊 Analytics</div>
+            <div class="settings-nav-item active" onclick="switchSettingsTab('basic', this)">🏠 Basic Info</div>
+            <div class="settings-nav-item" onclick="switchSettingsTab('members', this)">👥 Members</div>
+            <div class="settings-nav-item" onclick="switchSettingsTab('channels', this)">📢 Channels</div>
+            <div class="settings-nav-item" onclick="switchSettingsTab('moderation', this)">🛡️ Moderation</div>
+            <div class="settings-nav-item" onclick="switchSettingsTab('events', this)">📅 Events</div>
             <div class="settings-nav-item" onclick="switchSettingsTab('appearance', this)">🎨 Appearance</div>
             <div class="settings-nav-item" onclick="switchSettingsTab('reports', this)">🚩 Reports</div>
-            <div class="settings-nav-item" onclick="switchSettingsTab('permissions', this)">⚙️ Role Management</div>
+            <div class="settings-nav-item" onclick="switchSettingsTab('permissions', this)">⚙️ Roles</div>
           </div>
 
           <div class="settings-content-wrap">
@@ -60,22 +57,24 @@
               <div class="settings-tab active" id="settings-basic">
                 <div class="settings-group">
                   <div class="settings-group-title">📋 Basic Information</div>
+                  <div id="basicSettingsError" style="display:none; color: var(--error); font-size: 12px; margin-bottom: 10px; background: rgba(248,113,113,0.1); padding: 8px; border-radius: 6px;"></div>
+                  
                   <div class="settings-field">
-                    <label>Community Name</label>
-                    <input type="text" value="Pro Gamers" id="communityNameInput" class="settings-input" />
+                    <label>Community Name *</label>
+                    <input type="text" id="communityNameInput" class="settings-input" required />
                   </div>
                   <div class="settings-field">
-                    <label>Community Description</label>
-                    <textarea id="communityDescInput" class="settings-textarea"
-                      rows="3">A thriving community for developers of all levels. Share projects, ask questions, and explore the latest frameworks and tools.</textarea>
+                    <label>Community Description *</label>
+                    <textarea id="communityDescInput" class="settings-textarea" rows="3" required></textarea>
                   </div>
                   <div class="settings-field">
                     <label>Community Banner</label>
                     <div class="banner-upload">
-                      <div class="current-banner"
-                        style="background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); height:120px; border-radius:8px; display:flex; align-items:center; justify-content:center; color:white; font-weight:600;">
-                        Current Banner</div>
-                      <button class="btn-sm" onclick="toast('Banner upload dialog opened')">Change Banner</button>
+                      <div id="bannerPreview" class="current-banner" style="background:var(--bg-card2); background-size: cover; background-position: center; height:120px; border-radius:8px; display:flex; align-items:center; justify-content:center; color:var(--text-2); font-weight:600; border: 2px dashed var(--border);">
+                        No Banner Uploaded
+                      </div>
+                      <input type="file" id="bannerUploadInput" accept=".png, .jpg, .jpeg, .webp" style="display:none;" onchange="handleBannerUpload(event)">
+                      <button class="btn-sm" onclick="document.getElementById('bannerUploadInput').click()">Upload from Device</button>
                     </div>
                   </div>
                 </div>
@@ -83,91 +82,47 @@
 
               <div class="settings-tab" id="settings-members">
                 <div class="settings-group">
-                  <div class="settings-group-title">👥 Member Overview</div>
-                  <div class="member-stats">
-                    <div class="stat-item">
-                      <div class="stat-value" id="totalMembersCount">2,451</div>
-                      <div class="stat-label">Total Members</div>
-                    </div>
-                    <div class="stat-item">
-                      <div class="stat-value">312</div>
-                      <div class="stat-label">Online Now</div>
-                    </div>
-                    <div class="stat-item">
-                      <div class="stat-value">47</div>
-                      <div class="stat-label">New This Week</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="settings-group">
-                  <div class="settings-group-title">📋 Member List</div>
-
-                  <div class="member-list" id="settingsMemberList">
-                    <div class="member-item">
-                      <div class="member-avatar">JK</div>
-                      <div class="member-info">
-                        <div class="member-name">Jake Kim</div>
-                        <div class="member-role">👑 Owner • jake@nexushub.io</div>
-                        <div class="member-date">Joined Mar 1, 2022</div>
-                      </div>
-                      <div class="member-actions">
-                        <button class="btn-sm" onclick="editMember(101)">✏️</button>
-                      </div>
-                    </div>
-                  </div>
-
+                  <div class="settings-group-title">📋 Member List (15)</div>
+                  <div class="member-list" id="settingsMemberList"></div>
                 </div>
               </div>
 
               <div class="settings-tab" id="settings-channels">
                 <div class="settings-group">
-                  <div class="settings-group-title">📢 Channel Overview</div>
-                  <div class="channel-stats">
-                    <div class="stat-item">
-                      <div class="stat-value" id="totalChannelsCount">3</div>
-                      <div class="stat-label">Total Channels</div>
-                    </div>
-                    <div class="stat-item">
-                      <div class="stat-value">2</div>
-                      <div class="stat-label">Archived</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="settings-group">
                   <div class="settings-group-title">➕ Quick Actions</div>
-                  <div class="action-buttons">
-                    <button class="btn-sm accent" onclick="showModal()">📡 Create Channel</button>
-                  </div>
+                  <button class="btn-sm accent" style="width: fit-content;" onclick="showModal('modalBg')">📡 Create Channel</button>
                 </div>
                 <div class="settings-group">
                   <div class="settings-group-title">📋 Channel List</div>
-
                   <div class="channel-list" id="settingsChannelList"></div>
-
                 </div>
               </div>
 
               <div class="settings-tab" id="settings-moderation">
                 <div class="settings-group">
-                  <div class="settings-group-title">🔧 Auto-Mod Settings</div>
+                  <div class="settings-group-title">🛡️ Auto-Moderation</div>
                   <div class="settings-field">
-                    <label>Filtered Words</label>
-                    <textarea class="settings-textarea" rows="2"
-                      placeholder="Enter words to filter, separated by commas">spam, scam, inappropriate</textarea>
+                    <label>Filtered Words (comma separated)</label>
+                    <textarea id="modWordFilter" class="settings-textarea" rows="2"></textarea>
                   </div>
-                  <div class="settings-field">
-                    <label>Slow Mode Interval (seconds)</label>
-                    <input type="number" value="5" class="settings-input" style="width:100px;" />
+                  <div class="settings-field" style="flex-direction: row; align-items: center; justify-content: space-between;">
+                    <label>Block Suspicious Links</label>
+                    <input type="checkbox" id="modLinkBlock" style="width: 18px; height: 18px;" />
                   </div>
+                </div>
+                <div class="settings-group">
+                  <div class="settings-group-title">📜 Recent Moderation History</div>
+                  <table class="ch-table">
+                    <thead><tr><th>Date</th><th>Moderator</th><th>Action</th><th>Target User</th></tr></thead>
+                    <tbody id="modHistoryList"></tbody>
+                  </table>
                 </div>
               </div>
 
               <div class="settings-tab" id="settings-events">
                 <div class="settings-group">
                   <div class="settings-group-title">📅 Event Management</div>
-                  <div class="action-buttons">
-                    <button class="btn-sm accent" onclick="openEventModal()">🎉 Create Event</button>
-                  </div>
+                  <button class="btn-sm accent" style="width: fit-content;" onclick="showModal('eventModalBg')">🎉 Create Event</button>
                 </div>
                 <div class="settings-group">
                   <div class="settings-group-title">📋 Upcoming Events</div>
@@ -175,63 +130,37 @@
                 </div>
               </div>
 
-              <div class="settings-tab" id="settings-analytics">
-                <div class="settings-group">
-                  <div class="settings-group-title">📊 Community Analytics</div>
-                  <div class="analytics-grid">
-                    <div class="analytics-card">
-                      <div class="analytics-title">Member Growth</div>
-                      <div class="analytics-value">+47</div>
-                      <div class="analytics-subtitle">This week</div>
-                    </div>
-                    <div class="analytics-card">
-                      <div class="analytics-title">Active Members</div>
-                      <div class="analytics-value">1,847</div>
-                      <div class="analytics-subtitle">75.3% engagement</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
               <div class="settings-tab" id="settings-appearance">
                 <div class="settings-group">
-                  <div class="settings-group-title">🎨 Theme Customization</div>
+                  <div class="settings-group-title">🎨 Global Appearance</div>
+                  <p style="font-size:11px; color:var(--text-3); margin-top:-5px;">Changes here apply to all users in the community.</p>
                   <div class="settings-field">
-                    <label>Custom Theme CSS</label>
-                    <textarea class="settings-textarea" rows="4">/* Custom theme styles */</textarea>
+                    <label>Community Theme</label>
+                    <select id="themeSelect" class="settings-input">
+                      <option value="Dark">Dark Mode</option>
+                      <option value="Light">Light Mode</option>
+                    </select>
+                  </div>
+                  <div class="settings-field">
+                    <label>Accent Color</label>
+                    <input type="color" id="accentColorInput" value="#5b6ef5" style="width: 50px; height: 30px; border:none; border-radius: 4px; cursor:pointer;" />
                   </div>
                 </div>
               </div>
 
               <div class="settings-tab" id="settings-reports">
                 <div class="settings-group">
-                  <div class="settings-group-title">🚩 Reports Overview</div>
-                  <div class="mod-stats">
-                    <div class="stat-item">
-                      <div class="stat-value" id="openReportsCount">2</div>
-                      <div class="stat-label">Open Reports</div>
-                    </div>
-                    <div class="stat-item">
-                      <div class="stat-value" id="resolvedReportsCount">24</div>
-                      <div class="stat-label">Resolved Today</div>
-                    </div>
-                  </div>
+                  <div class="settings-group-title">🚩 Pending Reports</div>
+                  <table class="ch-table">
+                    <thead><tr><th>ID</th><th>User</th><th>Reason</th><th>Status</th><th>Action</th></tr></thead>
+                    <tbody id="pendingReportsList"></tbody>
+                  </table>
                 </div>
                 <div class="settings-group">
-                  <div class="settings-group-title">📋 Active Reports</div>
+                  <div class="settings-group-title">✅ Resolved Reports</div>
                   <table class="ch-table">
-                    <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>Reported User</th>
-                        <th>Reason</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                      </tr>
-                    </thead>
-
-                    <tbody id="settingsReportsList"></tbody>
-
+                    <thead><tr><th>ID</th><th>User</th><th>Reason</th><th>Resolution</th><th>Action</th></tr></thead>
+                    <tbody id="resolvedReportsList"></tbody>
                   </table>
                 </div>
               </div>
@@ -239,32 +168,24 @@
               <div class="settings-tab" id="settings-permissions">
                 <div class="settings-group">
                   <div class="settings-group-title">🎭 Role Management</div>
-                  <div class="action-buttons">
-                    <button class="btn-sm accent" onclick="createRole()">➕ Create Role</button>
-                  </div>
-                </div>
-                <div class="settings-group">
-                  <div class="settings-group-title">📋 Role List</div>
-
                   <div class="role-list-settings" id="settingsRolesList"></div>
-
                 </div>
               </div>
 
             </div>
+
             <div class="settings-actions" id="settingsActions">
-              <button class="btn-sm" onclick="discardSettings()">Discard Changes</button>
+              <button class="btn-sm" onclick="window.location.reload()">Discard Changes</button>
               <button class="btn-sm accent" onclick="saveSettings()">Save All Changes</button>
             </div>
 
           </div>
         </div>
       </div>
-
     </div>
   </div>
 
-  <div class="modal-bg" id="modalBg" onclick="if(event.target===this)closeModal()">
+  <div class="modal-bg" id="modalBg" onclick="if(event.target===this)closeModal('modalBg')">
     <div class="modal">
       <div class="modal-title">📡 Create New Channel</div>
       <div class="modal-field">
@@ -279,70 +200,44 @@
           <option value="📣 Announcement">📣 Announcement</option>
         </select>
       </div>
-      <div class="modal-field">
-        <label>Visibility</label>
-        <select id="chVisInput">
-          <option value="🌐 Public">🌐 Public</option>
-          <option value="🔐 Members only">🔐 Members only</option>
-          <option value="🔒 Mod only">🔒 Mod only</option>
-        </select>
-      </div>
       <div class="modal-btns">
-        <button class="btn-modal-cancel" onclick="closeModal()">Cancel</button>
+        <button class="btn-modal-cancel" onclick="closeModal('modalBg')">Cancel</button>
         <button class="btn-modal-ok" onclick="submitCreateChannel()">Create Channel</button>
       </div>
     </div>
   </div>
 
-  <div class="modal-bg" id="eventModalBg" onclick="if(event.target===this)closeEventModal()">
+  <div class="modal-bg" id="eventModalBg" onclick="if(event.target===this)closeModal('eventModalBg')">
     <div class="modal">
-      <div class="modal-title">📅 Create New Event</div>
-      <div class="modal-field">
-        <label>Event Title *</label>
-        <input id="evTitleInput" placeholder="e.g. Game Night, Code Review..." type="text" />
-      </div>
-      <div class="modal-field">
-        <label>Date & Time</label>
-        <input id="evDateInput" type="datetime-local" class="settings-input" />
-      </div>
+      <div class="modal-title">📅 Create Global Event</div>
+      <div class="modal-field"><label>Event Title *</label><input id="evTitleInput" type="text" /></div>
+      <div class="modal-field"><label>Date & Time</label><input id="evDateInput" type="datetime-local" class="settings-input" /></div>
       <div class="modal-field">
         <label>Event Type</label>
         <select id="evTypeInput">
           <option value="Community Event">Community Event</option>
           <option value="Tournament">Tournament</option>
-          <option value="Workshop">Workshop</option>
-          <option value="Meeting">Meeting</option>
         </select>
       </div>
-      <div class="modal-btns">
-        <button class="btn-modal-cancel" onclick="closeEventModal()">Cancel</button>
-        <button class="btn-modal-ok" onclick="submitCreateEvent()">Create Event</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal-bg" id="reportModalBg" onclick="if(event.target===this)closeReportModal()">
-    <div class="modal">
-      <div class="modal-title">🚩 Report Details</div>
-
-      <div id="reportModalContent"
-        style="font-size: 13px; line-height: 1.6; color: var(--text-2); margin-bottom: 20px;">
+      
+      <div class="modal-field">
+        <label>Custom Details (Optional)</label>
+        <div id="customFieldsContainer"></div>
+        <button class="btn-sm" style="margin-top:8px; width: fit-content;" onclick="addCustomEventFieldUI()">+ Add Custom Field</button>
       </div>
 
       <div class="modal-btns">
-        <button class="btn-modal-cancel" onclick="closeReportModal()">Close</button>
-        <button class="btn-modal-ok"
-          style="background: rgba(248, 113, 113, 0.2); color: var(--error); border: 1px solid rgba(248,113,113,0.5); box-shadow: none;"
-          id="reportModalResolveBtn">✅ Resolve Report</button>
+        <button class="btn-modal-cancel" onclick="closeModal('eventModalBg')">Cancel</button>
+        <button class="btn-modal-ok" onclick="submitCreateEvent()">Publish to Community</button>
       </div>
     </div>
   </div>
 
   <div class="toast" id="toast"><span id="toastMsg">Done</span></div>
+  
   <script src="../js/core/auth.js"></script>
   <script src="../js/components/rbac-nav.js"></script>
   <script src="../js/pages/community-manager.js"></script>
-<script src="../js/components/notifications.js"></script>
+  <script src="../js/components/notifications.js"></script>
 </body>
-
 </html>

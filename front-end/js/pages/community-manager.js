@@ -1,720 +1,445 @@
 /**
- * Gameunity — Complete CRUD State Manager
- * Handles UI, Modals, Forms, and dynamically rendering lists.
+ * Gameunity — Complete CRUD State Manager (v2)
+ * Features: Global Sync Simulation, Banner Uploads, Advanced Moderation, Custom Event Fields
  */
+
+const GLOBAL_STATE_KEY = "nexus_global_community_state";
 
 // ==========================================
 // 1. STATE (The Source of Truth)
 // ==========================================
 let state = {
   communityName: "Pro Gamers",
+  communityDesc: "A thriving community for developers of all levels.",
+  bannerImage: "", // Base64 or URL
 
-  // --- NEW: DYNAMIC LOGGED-IN USER ---
   currentUser: {
+    id: 101,
     firstName: "Jake",
     lastName: "Kim",
     fullName: "Jake Kim",
     handle: "jakekim",
     initials: "JK",
-    email: "jake@nexushub.io",
-    bgClass: "grad-orange",
-    role: "👑 Owner",
+    roleLevel: 5, // 5: Owner, 4: Manager, 3: Mod, 2: Event, 1: Member
+    role: "👑 Community Owner",
   },
 
-  // Default Channels Sample Data
+  appearance: {
+    theme: "Dark",
+    accentColor: "#5b6ef5",
+  },
+
+  autoMod: {
+    wordFilter: "spam, scam, hate",
+    linkBlock: false,
+  },
+
   channels: [
-    {
-      id: 1,
-      icon: "📣",
-      name: "announcements",
-      type: "📣 Announcement",
-      perms: "🔒 Mod only",
-    },
-    { id: 2, icon: "#", name: "general", type: "💬 Text", perms: "🌐 Public" },
-    {
-      id: 3,
-      icon: "🔊",
-      name: "study-together",
-      type: "🔊 Voice",
-      perms: "🌐 Public",
-    },
+    { id: 1, icon: "📣", name: "announcements", type: "📣 Announcement", members: 2450 },
+    { id: 2, icon: "#", name: "general", type: "💬 Text", members: 2450 },
+    { id: 3, icon: "🔊", name: "study-together", type: "🔊 Voice", members: 120 },
+    { id: 4, icon: "📅", name: "upcoming-events", type: "📅 Event", members: 2450 },
   ],
 
-  // Default Members Sample Data
+  // 15 Demo Members
   members: [
-    {
-      id: 101,
-      av: "JK",
-      bg: "grad-orange",
-      name: "Jake Kim",
-      email: "jake@nexushub.io",
-      role: "👑 Owner",
-      date: "Mar 1, 2022",
-    },
-    {
-      id: 102,
-      av: "SL",
-      bg: "grad-purple",
-      name: "Sara Lee",
-      email: "sara@example.com",
-      role: "🛡 Moderator",
-      date: "Jun 12, 2022",
-    },
-    {
-      id: 103,
-      av: "AM",
-      bg: "grad-violet",
-      name: "Alex Morgan",
-      email: "alex@example.com",
-      role: "👤 Member",
-      date: "Jan 5, 2025",
-    },
+    { id: 101, av: "JK", name: "Jake Kim", handle: "@jakekim", role: "👑 Community Owner", roleLevel: 5, date: "Mar 1, 2022", status: "Online" },
+    { id: 102, av: "SL", name: "Sara Lee", handle: "@saralee", role: "🛡 Community Manager", roleLevel: 4, date: "Jun 12, 2022", status: "Away" },
+    { id: 103, av: "AM", name: "Alex Morgan", handle: "@alexm", role: "🔨 Moderator", roleLevel: 3, date: "Jan 5, 2023", status: "Online" },
+    { id: 104, av: "TJ", name: "Tom Jones", handle: "@tomj", role: "📅 Event Manager", roleLevel: 2, date: "Feb 10, 2023", status: "Offline" },
+    { id: 105, av: "RK", name: "Raj Kumar", handle: "@rajk", role: "✅ Verified Member", roleLevel: 1, date: "Mar 15, 2023", status: "Online" },
+    { id: 106, av: "EB", name: "Emily Blunt", handle: "@emilyb", role: "👤 Member", roleLevel: 1, date: "Apr 20, 2023", status: "Offline" },
+    { id: 107, av: "CD", name: "Chris Doe", handle: "@chrisd", role: "👤 Member", roleLevel: 1, date: "May 25, 2023", status: "Online" },
+    { id: 108, av: "MJ", name: "Mary Jane", handle: "@maryj", role: "👤 Member", roleLevel: 1, date: "Jun 30, 2023", status: "Away" },
+    { id: 109, av: "PB", name: "Peter Parker", handle: "@peterp", role: "👤 Member", roleLevel: 1, date: "Jul 5, 2023", status: "Online" },
+    { id: 110, av: "BW", name: "Bruce Wayne", handle: "@brucew", role: "✅ Verified Member", roleLevel: 1, date: "Aug 10, 2023", status: "Offline" },
+    { id: 111, av: "CK", name: "Clark Kent", handle: "@clarkk", role: "👤 Member", roleLevel: 1, date: "Sep 15, 2023", status: "Online" },
+    { id: 112, av: "DP", name: "Diana Prince", handle: "@dianap", role: "🔨 Moderator", roleLevel: 3, date: "Oct 20, 2023", status: "Online" },
+    { id: 113, av: "BA", name: "Barry Allen", handle: "@barrya", role: "👤 Member", roleLevel: 1, date: "Nov 25, 2023", status: "Away" },
+    { id: 114, av: "HJ", name: "Hal Jordan", handle: "@halj", role: "👤 Member", roleLevel: 1, date: "Dec 30, 2023", status: "Offline" },
+    { id: 115, av: "AC", name: "Arthur Curry", handle: "@arthurc", role: "👤 Member", roleLevel: 1, date: "Jan 5, 2024", status: "Online" },
   ],
 
-  // Default Events Sample Data
   events: [
-    {
-      id: 1,
-      title: "Weekly Code Review",
-      date: "Friday, 8:00 PM EST",
-      type: "Community Event",
-    },
+    { id: 1, title: "Weekly Code Review", date: "Friday, 8:00 PM EST", type: "Community Event", customFields: [{ key: "Meeting Link", value: "discord.gg/progamer" }] },
   ],
 
-  // Default Reports Sample Data
   reports: [
-    {
-      id: 4821,
-      user: "BadActor_X",
-      reason: "🚫 Hate Speech",
-      status: "Pending",
-      notes:
-        "User was observed repeatedly breaking community rules in #general. Review chat logs.",
-    },
-    {
-      id: 4820,
-      user: "SpamBot99",
-      reason: "📢 Spam",
-      status: "Pending",
-      notes:
-        "Account posted 45 identical links in #frontend over a 2 minute window.",
-    },
+    { id: 4821, user: "BadActor_X", reason: "🚫 Hate Speech", status: "Pending" },
+    { id: 4820, user: "SpamBot99", reason: "📢 Spam", status: "Pending" },
+    { id: 4819, user: "ToxicGamer", reason: "Harassment", status: "Resolved", resolvedBy: "Sara Lee" },
   ],
 
-  // Default Roles Sample Data
+  modHistory: [
+    { id: 1, mod: "Sara Lee", target: "ToxicGamer", action: "Warned", date: "Oct 24, 2023" },
+    { id: 2, mod: "Alex Morgan", target: "SpamBot99", action: "Deleted Messages", date: "Oct 23, 2023" },
+  ],
+
   roles: [
-    {
-      id: 1,
-      name: "👑 Owner",
-      desc: "Full control over community",
-      count: 1,
-      color: "#F59E0B",
-    },
-    {
-      id: 2,
-      name: "🛡 Moderator",
-      desc: "Can moderate members and content",
-      count: 4,
-      color: "#818CF8",
-    },
-    {
-      id: 3,
-      name: "👤 Member",
-      desc: "Standard community member",
-      count: 2446,
-      color: "#9CA3AF",
-    },
+    { id: 1, name: "👑 Community Owner", level: 5, color: "#F59E0B" },
+    { id: 2, name: "🛡 Community Manager", level: 4, color: "#818CF8" },
+    { id: 3, name: "🔨 Moderator", level: 3, color: "#34D399" },
+    { id: 4, name: "📅 Event Manager", level: 2, color: "#F472B6" },
+    { id: 5, name: "✅ Verified Member", level: 1, color: "#06B6D4" },
+    { id: 6, name: "👤 Member", level: 1, color: "#9CA3AF" },
   ],
-
-  resolvedReportsCounter: 24,
 };
 
-const COMMUNITY_EVENTS_STORAGE_KEY = "nexus_community_events";
-
-function getCurrentCommunitySlug() {
-  const params = new URLSearchParams(window.location.search);
-  return params.get("name") || "pro-gamers";
+// ==========================================
+// 2. GLOBAL SYNC & STORAGE LOGIC
+// ==========================================
+function loadGlobalState() {
+  const stored = localStorage.getItem(GLOBAL_STATE_KEY);
+  if (stored) state = JSON.parse(stored);
+  else saveGlobalState(); // Initialize first time
 }
 
-function loadEventsFromStorage() {
-  return JSON.parse(localStorage.getItem(COMMUNITY_EVENTS_STORAGE_KEY) || "[]");
+function saveGlobalState() {
+  localStorage.setItem(GLOBAL_STATE_KEY, JSON.stringify(state));
 }
-
-function saveEventsToStorage() {
-  localStorage.setItem(
-    COMMUNITY_EVENTS_STORAGE_KEY,
-    JSON.stringify(state.events),
-  );
-}
-
-function hydrateEventsFromStorage() {
-  const stored = loadEventsFromStorage();
-  const community = getCurrentCommunitySlug();
-  const filteredEvents = stored.filter((ev) => ev.communityId === community);
-  if (filteredEvents.length) {
-    state.events = filteredEvents;
-  }
-}
-
-// Variables to hold our backups for the "Discard" function
-let savedStateSnapshot = null;
-let savedInputValues = [];
 
 // ==========================================
-// 2. RENDER FUNCTIONS (Updating the UI)
+// 3. UI TAB NAVIGATION & MODALS
 // ==========================================
+window.switchSettingsTab = function (tabId, navEl) {
+  document.querySelectorAll(".settings-tab").forEach((tab) => tab.classList.remove("active"));
+  document.querySelectorAll(".settings-nav-item").forEach((item) => item.classList.remove("active"));
+  document.getElementById("settings-" + tabId).classList.add("active");
+  if (navEl) navEl.classList.add("active");
+};
 
-// --- NEW: Load the current user from localStorage ---
-function loadCurrentUser() {
-  const storedUser = localStorage.getItem("nexus_current_user");
-  if (storedUser) {
-    state.currentUser = JSON.parse(storedUser);
-  } else {
-    // If first time loading, save default user to storage
-    localStorage.setItem(
-      "nexus_current_user",
-      JSON.stringify(state.currentUser),
-    );
-  }
+window.showModal = function (id) { document.getElementById(id).classList.add("show"); };
+window.closeModal = function (id) { document.getElementById(id).classList.remove("show"); };
+window.toast = function (msg) {
+  const t = document.getElementById("toast");
+  document.getElementById("toastMsg").textContent = msg;
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 2500);
+};
 
-  // Update Top Bar Avatar dynamically
-  const topAvatar = document.querySelector(".tb-av");
-  if (topAvatar) {
-    topAvatar.innerText = state.currentUser.initials;
-    topAvatar.className = `tb-av ${state.currentUser.bgClass || ""}`;
-    if (
-      state.currentUser.bgClass === "grad-orange" ||
-      state.currentUser.initials === "JK"
-    ) {
-      topAvatar.style.background =
-        "linear-gradient(135deg, var(--gold), #d97706)";
-      topAvatar.style.borderColor = "rgba(245, 158, 11, 0.4)";
-    } else {
-      topAvatar.style.background = ""; // Use CSS class instead
-    }
-  }
-
-  // Update Bottom Left Nav Avatar dynamically
-  const footerAv = document.querySelector(".ln-owner-av");
-  const footerName = document.querySelector(".ln-owner-name");
-  const footerRole = document.querySelector(".ln-owner-role");
-
-  if (footerAv) {
-    footerAv.innerText = state.currentUser.initials;
-    if (
-      state.currentUser.bgClass === "grad-orange" ||
-      state.currentUser.initials === "JK"
-    ) {
-      footerAv.style.background =
-        "linear-gradient(135deg, var(--gold), #d97706)";
-    } else {
-      footerAv.style.background =
-        "linear-gradient(135deg, var(--accent), var(--accent-2))"; // Default fallback
-    }
-  }
-  if (footerName) footerName.innerText = state.currentUser.fullName;
-  if (footerRole) footerRole.innerText = state.currentUser.role || "Admin";
-}
-
-window.renderAll = function () {
-  renderChannels();
+// ==========================================
+// 4. RENDER FUNCTIONS
+// ==========================================
+function renderAll() {
   renderMembers();
+  renderChannels();
   renderEvents();
   renderReports();
+  renderModHistory();
   renderRoles();
-};
+  applyAppearance();
+
+  // Populate basic inputs from State
+  document.getElementById("communityNameInput").value = state.communityName;
+  document.getElementById("communityDescInput").value = state.communityDesc;
+  document.getElementById("topBarCommunityName").innerText = state.communityName;
+  document.getElementById("modWordFilter").value = state.autoMod.wordFilter;
+  document.getElementById("modLinkBlock").checked = state.autoMod.linkBlock;
+
+  if(state.bannerImage) {
+      document.getElementById("bannerPreview").style.backgroundImage = `url(${state.bannerImage})`;
+      document.getElementById("bannerPreview").innerText = "";
+  }
+}
+
+function applyAppearance() {
+  document.documentElement.style.setProperty('--accent', state.appearance.accentColor);
+  document.getElementById("accentColorInput").value = state.appearance.accentColor;
+  document.getElementById("themeSelect").value = state.appearance.theme;
+  document.body.className = state.appearance.theme === "Light" ? "theme-light" : "theme-dark";
+}
+
+function renderMembers() {
+  const list = document.getElementById("settingsMemberList");
+  if (!list) return;
+
+  const roleOptions = state.roles.map(r => `<option value="${r.name}">${r.name}</option>`).join("");
+
+  list.innerHTML = state.members.map(m => {
+    // Determine if logged in user can edit this member based on hierarchy level
+    const canEdit = state.currentUser.roleLevel > m.roleLevel || state.currentUser.id === m.id;
+    
+    // Removed the "Profile" button from this block entirely
+    return `
+        <div class="member-item">
+            <div class="member-avatar">${m.av}</div>
+            <div class="member-info">
+                <div class="member-name">${m.name} <span style="color:var(--text-3);font-size:11px;">${m.handle}</span></div>
+                <div class="member-role">
+                  ${canEdit ? `<select class="role-select" onchange="toast('Role updated for ${m.name}')">
+                    <option value="${m.role}" selected hidden>${m.role}</option>
+                    ${roleOptions}
+                  </select>` : `<span style="font-size:12px; color:var(--text-2);">${m.role}</span>`}
+                </div>
+                <div class="member-date">Joined ${m.date} • <span style="color:${m.status==='Online'?'var(--success)':'var(--text-3)'}">${m.status}</span></div>
+            </div>
+            <div class="member-actions">
+                ${canEdit && state.currentUser.id !== m.id ? `<button class="btn-sm danger" onclick="toast('${m.name} was kicked.')">🚫 Kick</button>` : ""}
+            </div>
+        </div>
+    `}).join("");
+}
 
 function renderChannels() {
   const list = document.getElementById("settingsChannelList");
-  const countEl = document.getElementById("totalChannelsCount");
-  if (!list || !countEl) return;
-
-  countEl.innerText = state.channels.length;
-
-  list.innerHTML = state.channels
-    .map(
-      (ch) => `
+  if (!list) return;
+  list.innerHTML = state.channels.map(ch => `
         <div class="channel-item">
             <div class="channel-icon">${ch.icon}</div>
             <div class="channel-info">
                 <div class="channel-name">${ch.name}</div>
                 <div class="channel-type">${ch.type}</div>
-                <div class="channel-perms">${ch.perms}</div>
+                <div class="channel-perms">${ch.members.toLocaleString()} members</div>
             </div>
             <div class="channel-actions">
-                <button class="btn-sm" onclick="editChannel(${ch.id})">✏️</button>
-                <button class="btn-sm danger" onclick="deleteChannel(${ch.id})">🗑️</button>
+                <button class="btn-sm accent" onclick="openChannelChat('${ch.name}')">💬 Go to Chat</button>
+                <button class="btn-sm danger" onclick="toast('Channel deleted')">🗑️</button>
             </div>
         </div>
-    `,
-    )
-    .join("");
-}
-
-function renderMembers() {
-  const list = document.getElementById("settingsMemberList");
-  const countEl = document.getElementById("totalMembersCount");
-  if (!list || !countEl) return;
-
-  countEl.innerText = (2448 + state.members.length).toLocaleString();
-
-  list.innerHTML = state.members
-    .map(
-      (m) => `
-        <div class="member-item">
-            <div class="member-avatar ${m.bg || ""}" style="${!m.bg ? "background: linear-gradient(135deg, var(--accent), var(--accent-2));" : ""}">${m.av}</div>
-            <div class="member-info">
-                <div class="member-name">${m.name}</div>
-                <div class="member-role">${m.role} • ${m.email}</div>
-                <div class="member-date">Joined ${m.date}</div>
-            </div>
-            <div class="member-actions">
-                <button class="btn-sm" onclick="editMember(${m.id})">✏️</button>
-                ${!m.role.includes("Owner") ? `<button class="btn-sm danger" onclick="kickMember(${m.id})">🚫 Kick</button>` : ""}
-            </div>
-        </div>
-    `,
-    )
-    .join("");
-}
-
-function renderEvents() {
-  const list = document.getElementById("settingsEventsList");
-  if (!list) return;
-
-  if (state.events.length === 0) {
-    list.innerHTML = `<div style="text-align:center; padding: 20px; font-size: 13px; color: var(--text-3);">No upcoming events</div>`;
-    return;
-  }
-
-  list.innerHTML = state.events
-    .map(
-      (e) => `
-        <div class="role-item-settings">
-            <div class="role-info">
-                <div class="role-name">${e.title}</div>
-                <div class="role-desc" style="color: var(--accent); margin-top: 4px;">📅 ${e.date}</div>
-                <div class="role-count" style="margin-top: 4px;">${e.type}</div>
-            </div>
-            <div class="role-actions">
-                <button class="btn-sm danger" onclick="deleteEvent(${e.id})">🗑️ Cancel</button>
-            </div>
-        </div>
-    `,
-    )
-    .join("");
+    `).join("");
 }
 
 function renderReports() {
-  const list = document.getElementById("settingsReportsList");
-  const openCountEl = document.getElementById("openReportsCount");
-  const resCountEl = document.getElementById("resolvedReportsCount");
+  const pendingList = document.getElementById("pendingReportsList");
+  const resolvedList = document.getElementById("resolvedReportsList");
 
-  if (!list || !openCountEl || !resCountEl) return;
+  const pending = state.reports.filter(r => r.status === "Pending");
+  const resolved = state.reports.filter(r => r.status === "Resolved");
 
-  openCountEl.innerText = state.reports.length;
-  resCountEl.innerText = state.resolvedReportsCounter;
-
-  if (state.reports.length === 0) {
-    list.innerHTML = `<tr><td colspan="5" style="text-align:center; padding: 20px;">No open reports! 🎉</td></tr>`;
-    return;
-  }
-
-  list.innerHTML = state.reports
-    .map(
-      (r) => `
+  pendingList.innerHTML = pending.map(r => `
         <tr>
             <td>#${r.id}</td>
             <td>${r.user}</td>
             <td>${r.reason}</td>
-            <td><span class="ri-badge badge-pending" style="color:#F59E0B; background:rgba(245,158,11,0.1); padding:2px 6px; border-radius:12px; font-size:10px;">${r.status}</span></td>
-            <td>
-                <div class="tbl-actions">
-                    <div class="tbl-btn" onclick="viewReport(${r.id})" title="View Details">👁</div>
-                    <div class="tbl-btn" onclick="resolveReport(${r.id})" title="Resolve">✅</div>
-                </div>
-            </td>
-        </tr>
-    `,
-    )
-    .join("");
+            <td><span style="color:var(--gold)">Pending</span></td>
+            <td><button class="btn-sm" onclick="resolveReport(${r.id})">✅ Resolve</button></td>
+        </tr>`).join("") || `<tr><td colspan="5" style="text-align:center; padding: 20px;">No pending reports.</td></tr>`;
+
+  resolvedList.innerHTML = resolved.map(r => `
+        <tr>
+            <td>#${r.id}</td>
+            <td>${r.user}</td>
+            <td>${r.reason}</td>
+            <td>Resolved by ${r.resolvedBy}</td>
+            <td><button class="btn-sm danger" onclick="reopenReport(${r.id})">🔄 Reopen</button></td>
+        </tr>`).join("") || `<tr><td colspan="5" style="text-align:center; padding: 20px;">No resolved reports.</td></tr>`;
+}
+
+function renderModHistory() {
+  const list = document.getElementById("modHistoryList");
+  list.innerHTML = state.modHistory.map(h => `
+    <tr><td>${h.date}</td><td>${h.mod}</td><td>${h.action}</td><td>${h.target}</td></tr>
+  `).join("");
 }
 
 function renderRoles() {
   const list = document.getElementById("settingsRolesList");
-  if (!list) return;
+  list.innerHTML = state.roles.map(r => `
+      <div class="role-item-settings">
+          <div class="role-info">
+              <div class="role-name">${r.name} (Level ${r.level})</div>
+          </div>
+          <div class="role-color" style="background:${r.color};"></div>
+          <div class="role-actions">
+              ${r.level < state.currentUser.roleLevel ? `<button class="btn-sm danger" onclick="toast('Role deleted')">🗑️</button>` : ''}
+          </div>
+      </div>
+  `).join("");
+}
 
-  list.innerHTML = state.roles
-    .map(
-      (r) => `
+function renderEvents() {
+  const list = document.getElementById("settingsEventsList");
+  list.innerHTML = state.events.map(e => `
         <div class="role-item-settings">
             <div class="role-info">
-                <div class="role-name">${r.name}</div>
-                <div class="role-desc">${r.desc}</div>
-                <div class="role-count">${r.count.toLocaleString()} members</div>
+                <div class="role-name">${e.title}</div>
+                <div class="role-desc" style="color: var(--accent); margin-top: 4px;">📅 ${e.date}</div>
+                ${e.customFields ? e.customFields.map(cf => `<div style="font-size:11px; margin-top:2px;"><b>${cf.key}:</b> ${cf.value}</div>`).join('') : ''}
             </div>
-            <div class="role-color" style="background:${r.color};"></div>
             <div class="role-actions">
-                <button class="btn-sm" onclick="editRole(${r.id})">✏️</button>
-                ${!r.name.includes("Owner") ? `<button class="btn-sm danger" onclick="deleteRole(${r.id})">🗑️</button>` : ""}
+                <button class="btn-sm danger" onclick="toast('Event Cancelled')">🗑️ Cancel</button>
             </div>
         </div>
-    `,
-    )
-    .join("");
+    `).join("");
 }
 
 // ==========================================
-// 3. NAVIGATION (Dynamic User Handoff)
+// 5. ACTIONS, VALIDATION & SAVING
 // ==========================================
-
-window.viewAsMember = function () {
-  localStorage.setItem("nexus_current_user", JSON.stringify(state.currentUser));
-  window.location.href = "community-page.html";
-};
-
-window.openProfileSettings = function () {
-  localStorage.setItem("nexus_current_user", JSON.stringify(state.currentUser));
-  window.location.href = "profile-settings.html";
-};
-
-// ==========================================
-// 4. CRUD ACTIONS (Channels, Members, Events, Reports, Roles)
-// ==========================================
-
+// --- Create Channel Logic ---
 window.submitCreateChannel = function () {
-  const nameInput = document.getElementById("chNameInput").value.trim();
-  const typeInput = document.getElementById("chTypeInput").value;
-  const visInput = document.getElementById("chVisInput").value;
+  console.log("1. Starting channel creation..."); // Helps us debug if needed
 
-  if (!nameInput) return toast("⚠️ Channel name cannot be empty");
+  const nameInputEl = document.getElementById("chNameInput");
+  const typeInputEl = document.getElementById("chTypeInput");
 
+  // Safety check: ensure the modal elements exist
+  if (!nameInputEl || !typeInputEl) {
+    console.error("Could not find the channel input fields in the HTML!");
+    return;
+  }
+
+  const nameInput = nameInputEl.value.trim();
+  const typeInput = typeInputEl.value;
+
+  if (!nameInput) {
+    return toast("⚠️ Channel name cannot be empty");
+  }
+
+  // Determine the correct icon
   let icon = "#";
   if (typeInput.includes("Voice")) icon = "🔊";
   if (typeInput.includes("Announcement")) icon = "📣";
 
+  // Safeguard: Fallback to 0 if state.members is ever corrupted
+  const memberCount = (state.members && state.members.length) ? state.members.length : 0;
+
+  // Build the new channel object
   const newChannel = {
     id: Date.now(),
     icon: icon,
     name: nameInput.toLowerCase().replace(/\s+/g, "-"),
     type: typeInput,
-    perms: visInput,
+    members: memberCount
   };
 
+  console.log("2. New channel built:", newChannel);
+
+  // Add to state
+  if (!state.channels) state.channels = []; // Safety check
   state.channels.push(newChannel);
+  
+  // Save to our simulated backend
+  saveGlobalState();
+  console.log("3. Saved to global state.");
+
+  // Force the UI to re-render the list
   renderChannels();
-  closeModal();
+  console.log("4. UI Re-rendered.");
+
+  // Close modal, show toast, and reset input
+  closeModal('modalBg');
   toast(`✅ Channel #${newChannel.name} created!`);
-  document.getElementById("chNameInput").value = "";
+  nameInputEl.value = "";
 };
-
-window.deleteChannel = function (id) {
-  if (confirm("Are you sure you want to delete this channel?")) {
-    state.channels = state.channels.filter((ch) => ch.id !== id);
-    renderChannels();
-    toast("🗑️ Channel deleted");
+// Banner Upload Reader
+window.handleBannerUpload = function(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      document.getElementById("bannerPreview").style.backgroundImage = `url(${e.target.result})`;
+      document.getElementById("bannerPreview").innerText = "";
+      state.bannerImage = e.target.result; // Save base64
+      document.getElementById("settingsActions").classList.add("show");
+    };
+    reader.readAsDataURL(file);
   }
 };
 
-window.editChannel = function (id) {
-  const channel = state.channels.find((ch) => ch.id === id);
-  if (!channel) return;
-  const newName = prompt("Enter new channel name:", channel.name);
-  if (newName && newName.trim() !== "") {
-    channel.name = newName.trim().toLowerCase().replace(/\s+/g, "-");
-    renderChannels();
-    toast("✏️ Channel updated");
+// Global Save Button
+window.saveSettings = function () {
+  const nameInput = document.getElementById("communityNameInput").value.trim();
+  const descInput = document.getElementById("communityDescInput").value.trim();
+  const errorMsg = document.getElementById("basicSettingsError");
+
+  if (!nameInput || !descInput) {
+    errorMsg.innerText = "⚠️ Community Name and Description are required.";
+    errorMsg.style.display = "block";
+    return;
   }
+  errorMsg.style.display = "none";
+
+  // Update State Values
+  state.communityName = nameInput;
+  state.communityDesc = descInput;
+  state.appearance.theme = document.getElementById("themeSelect").value;
+  state.appearance.accentColor = document.getElementById("accentColorInput").value;
+  state.autoMod.wordFilter = document.getElementById("modWordFilter").value;
+  state.autoMod.linkBlock = document.getElementById("modLinkBlock").checked;
+  
+  saveGlobalState(); // Persist changes
+  applyAppearance(); // Instantly apply styling updates
+  
+  document.getElementById("topBarCommunityName").innerText = state.communityName;
+  document.getElementById("settingsActions").classList.remove("show");
+  toast("✅ All community settings saved globally!");
 };
 
-window.kickMember = function (id) {
-  if (confirm("Are you sure you want to kick this member?")) {
-    state.members = state.members.filter((m) => m.id !== id);
-    renderMembers();
-    toast("🚫 Member kicked");
-  }
-};
-
-window.editMember = function (id) {
-  const member = state.members.find((m) => m.id === id);
-  if (!member) return;
-  if (member.role.includes("Owner")) return toast("⚠️ Cannot edit Owner");
-
-  const newRole = prompt(
-    `Change role for ${member.name} (e.g., '🛡 Moderator' or '👤 Member'):`,
-    member.role,
-  );
-  if (newRole && newRole.trim() !== "") {
-    member.role = newRole.trim();
-    renderMembers();
-    toast("✅ Role updated");
-  }
-};
-
-window.openEventModal = function () {
-  const modal = document.getElementById("eventModalBg");
-  if (modal) modal.classList.add("show");
-};
-
-window.closeEventModal = function () {
-  const modal = document.getElementById("eventModalBg");
-  if (modal) modal.classList.remove("show");
+// Event Custom Fields Logic
+window.addCustomEventFieldUI = function() {
+  const container = document.getElementById("customFieldsContainer");
+  const id = Date.now();
+  container.insertAdjacentHTML('beforeend', `
+    <div class="modal-field-row" id="cf-${id}" style="display:flex; gap:10px; margin-bottom:8px;">
+      <input type="text" placeholder="Field (e.g. Prize Pool)" class="cf-key" style="flex:1;">
+      <input type="text" placeholder="Value (e.g. $500)" class="cf-val" style="flex:2;">
+      <button class="btn-sm danger" onclick="document.getElementById('cf-${id}').remove()">X</button>
+    </div>
+  `);
 };
 
 window.submitCreateEvent = function () {
-  const titleInput = document.getElementById("evTitleInput").value.trim();
-  const dateInput = document.getElementById("evDateInput").value;
-  const typeInput = document.getElementById("evTypeInput").value;
+  const title = document.getElementById("evTitleInput").value.trim();
+  if (!title) return toast("⚠️ Event title cannot be empty");
 
-  if (!titleInput) return toast("⚠️ Event title cannot be empty");
+  let customFields = [];
+  document.querySelectorAll(".modal-field-row").forEach(row => {
+    const k = row.querySelector(".cf-key").value.trim();
+    const v = row.querySelector(".cf-val").value.trim();
+    if (k && v) customFields.push({ key: k, value: v });
+  });
 
-  let displayDate = dateInput;
-  if (dateInput) {
-    const d = new Date(dateInput);
-    if (!isNaN(d.getTime())) {
-      const opts = {
-        weekday: "short",
-        month: "short",
-        day: "numeric",
-        hour: "numeric",
-        minute: "2-digit",
-      };
-      displayDate = d.toLocaleString("en-US", opts);
-    }
-  } else {
-    displayDate = "TBD";
-  }
-
-  const communityId = getCurrentCommunitySlug();
-  const now = new Date();
-  const month = now.toLocaleString("en-US", { month: "short" });
-  const day = String(now.getDate()).padStart(2, "0");
-  const status = "Open";
-
-  const newEvent = {
+  state.events.push({
     id: Date.now(),
-    title: titleInput,
-    date: displayDate,
-    time: dateInput
-      ? new Date(dateInput).toLocaleTimeString("en-US", {
-          hour: "numeric",
-          minute: "2-digit",
-        })
-      : "TBD",
-    location: "Online",
-    status,
-    communityId,
-    createdBy: state.currentUser.handle,
-    createdAt: new Date().toISOString(),
-    month,
-    day,
-    description: typeInput,
-  };
+    title: title,
+    date: document.getElementById("evDateInput").value || "TBD",
+    type: document.getElementById("evTypeInput").value,
+    customFields: customFields
+  });
 
-  state.events.push(newEvent);
-  saveEventsToStorage();
+  saveGlobalState();
   renderEvents();
-  closeEventModal();
-  toast(`🎉 Event "${newEvent.title}" scheduled!`);
-
-  document.getElementById("evTitleInput").value = "";
-  document.getElementById("evDateInput").value = "";
+  closeModal('eventModalBg');
+  toast(`🎉 Event "${title}" published globally!`);
 };
 
-window.deleteEvent = function (id) {
-  if (confirm("Are you sure you want to cancel this event?")) {
-    state.events = state.events.filter((e) => e.id !== id);
-    saveEventsToStorage();
-    renderEvents();
-    toast("🗑️ Event cancelled");
+// Channel Navigation (Now successfully redirects)
+window.openChannelChat = function(channelName) {
+  toast(`Redirecting to Chat: #${channelName}...`);
+  setTimeout(() => {
+    window.location.href = `chat.html?channel=${channelName}`;
+  }, 800);
+};
+
+// Report Status Management
+window.resolveReport = function(id) {
+  const r = state.reports.find(x => x.id === id);
+  if(r) {
+    r.status = "Resolved";
+    r.resolvedBy = state.currentUser.fullName;
+    saveGlobalState(); renderReports(); toast("✅ Report resolved.");
   }
 };
-
-window.viewReport = function (id) {
-  const report = state.reports.find((r) => r.id === id);
-  if (!report) return;
-
-  const content = document.getElementById("reportModalContent");
-  content.innerHTML = `
-        <div style="margin-bottom: 8px;"><strong style="color:var(--text-1)">Report ID:</strong> #${report.id}</div>
-        <div style="margin-bottom: 8px;"><strong style="color:var(--text-1)">Reported User:</strong> ${report.user}</div>
-        <div style="margin-bottom: 8px;"><strong style="color:var(--text-1)">Violation Reason:</strong> ${report.reason}</div>
-        <div style="margin-bottom: 8px;"><strong style="color:var(--text-1)">Current Status:</strong> ${report.status}</div>
-        <div style="margin-top: 15px; padding: 12px; background: var(--bg-input); border-radius: 8px; border: 1px solid var(--border);">
-            <strong style="color:var(--text-1)">Evidence / Notes:</strong><br/>
-            <div style="margin-top: 5px;">${report.notes}</div>
-        </div>
-    `;
-
-  const resolveBtn = document.getElementById("reportModalResolveBtn");
-  resolveBtn.onclick = function () {
-    resolveReport(id);
-    closeReportModal();
-  };
-
-  document.getElementById("reportModalBg").classList.add("show");
-};
-
-window.closeReportModal = function () {
-  document.getElementById("reportModalBg").classList.remove("show");
-};
-
-window.resolveReport = function (id) {
-  state.reports = state.reports.filter((r) => r.id !== id);
-  state.resolvedReportsCounter++;
-  renderReports();
-  toast("✅ Report resolved and closed");
-};
-
-window.createRole = function () {
-  const roleName = prompt("Enter new role name (e.g., 🌟 VIP):");
-  if (!roleName || roleName.trim() === "") return;
-
-  const newRole = {
-    id: Date.now(),
-    name: roleName.trim(),
-    desc: "Custom role created by admin",
-    count: 0,
-    color: "#34D399",
-  };
-  state.roles.push(newRole);
-  renderRoles();
-  toast(`✅ Role ${newRole.name} created!`);
-};
-
-window.editRole = function (id) {
-  const role = state.roles.find((r) => r.id === id);
-  if (!role) return;
-  if (role.name.includes("Owner")) return toast("⚠️ Cannot edit Owner role");
-
-  const newName = prompt("Enter new name for this role:", role.name);
-  if (newName && newName.trim() !== "") {
-    role.name = newName.trim();
-    renderRoles();
-    toast("✏️ Role updated");
+window.reopenReport = function(id) {
+  const r = state.reports.find(x => x.id === id);
+  if(r) {
+    r.status = "Pending";
+    delete r.resolvedBy;
+    saveGlobalState(); renderReports(); toast("🔄 Report reopened.");
   }
-};
-
-window.deleteRole = function (id) {
-  const role = state.roles.find((r) => r.id === id);
-  if (!role) return;
-  if (role.name.includes("Owner")) return toast("⚠️ Cannot delete Owner role");
-
-  if (confirm(`Are you sure you want to delete the ${role.name} role?`)) {
-    state.roles = state.roles.filter((r) => r.id !== id);
-    renderRoles();
-    toast("🗑️ Role deleted");
-  }
-};
-
-// ==========================================
-// 5. UI/UX CONTROLS & SNAPSHOT LOGIC
-// ==========================================
-
-window.switchSettingsTab = function (tabId, navEl) {
-  document
-    .querySelectorAll(".settings-tab")
-    .forEach((tab) => tab.classList.remove("active"));
-  document
-    .querySelectorAll(".settings-nav-item")
-    .forEach((item) => item.classList.remove("active"));
-  const targetTab = document.getElementById("settings-" + tabId);
-  if (targetTab) targetTab.classList.add("active");
-  if (navEl) navEl.classList.add("active");
-};
-
-window.showModal = function () {
-  const modal = document.getElementById("modalBg");
-  if (modal) modal.classList.add("show");
-};
-window.closeModal = function () {
-  const modal = document.getElementById("modalBg");
-  if (modal) modal.classList.remove("show");
-};
-
-window.toast = function (msg) {
-  const t = document.getElementById("toast");
-  const m = document.getElementById("toastMsg");
-  if (!t || !m) return;
-  m.textContent = msg;
-  t.classList.add("show");
-  setTimeout(() => t.classList.remove("show"), 2500);
-};
-
-function takeSnapshot() {
-  savedStateSnapshot = JSON.parse(JSON.stringify(state));
-  savedInputValues = Array.from(
-    document.querySelectorAll(
-      "#view-settings input, #view-settings textarea, #view-settings select",
-    ),
-  ).map((el) => el.value);
-}
-
-window.saveSettings = function () {
-  const nameInput = document.getElementById("communityNameInput");
-  const topBarName = document.getElementById("topBarCommunityName");
-  if (nameInput && topBarName) {
-    state.communityName = nameInput.value;
-    topBarName.innerText = state.communityName;
-  }
-  takeSnapshot();
-  const actionbar = document.getElementById("settingsActions");
-  if (actionbar) actionbar.classList.remove("show");
-  toast("✅ All community settings saved!");
-};
-
-window.discardSettings = function () {
-  if (savedStateSnapshot) {
-    state = JSON.parse(JSON.stringify(savedStateSnapshot));
-  }
-  document
-    .querySelectorAll(
-      "#view-settings input, #view-settings textarea, #view-settings select",
-    )
-    .forEach((el, index) => {
-      el.value = savedInputValues[index];
-    });
-  renderAll();
-  const actionbar = document.getElementById("settingsActions");
-  if (actionbar) actionbar.classList.remove("show");
-  toast("❌ Changes discarded and reverted");
 };
 
 // ==========================================
 // 6. INITIALIZATION
 // ==========================================
 document.addEventListener("DOMContentLoaded", () => {
-  loadCurrentUser(); // Load dynamic user data!
-  hydrateEventsFromStorage();
+  loadGlobalState();
   renderAll();
-  takeSnapshot();
 
-  // Settings Action Bar Trigger Logic
-  const settingsActions = document.getElementById("settingsActions");
-  if (settingsActions) {
-    const inputs = document.querySelectorAll(
-      "#view-settings input, #view-settings textarea, #view-settings select",
-    );
-    inputs.forEach((el) => {
-      el.addEventListener("input", () => settingsActions.classList.add("show"));
-      el.addEventListener("change", () =>
-        settingsActions.classList.add("show"),
-      );
-    });
-
-    const tabContainer = document.querySelector(".settings-content");
-    if (tabContainer) {
-      tabContainer.addEventListener("click", (e) => {
-        if (
-          e.target.tagName === "BUTTON" &&
-          !e.target.classList.contains("btn-modal-ok") &&
-          !e.target.classList.contains("btn-modal-cancel")
-        ) {
-          settingsActions.classList.add("show");
-        }
-      });
-    }
-  }
-
-  console.log("Community Manager Panel initialized.");
+  // Watch inputs to show the "Save Changes" bar
+  document.querySelectorAll("#view-settings input, #view-settings textarea, #view-settings select").forEach((el) => {
+    el.addEventListener("input", () => document.getElementById("settingsActions").classList.add("show"));
+    el.addEventListener("change", () => document.getElementById("settingsActions").classList.add("show"));
+  });
 });
