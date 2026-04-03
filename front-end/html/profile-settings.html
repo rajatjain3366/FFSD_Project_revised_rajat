@@ -1,51 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <title>Gameunity – Profile &amp; Settings</title>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
-    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
   <link href="../css/global.css" rel="stylesheet" />
   <link href="../css/pages/profile-settings.css" rel="stylesheet" />
   <link href="../css/pages/rbac-nav.css" rel="stylesheet" />
 </head>
-
 <body>
+  
   <aside class="app-rail">
     <div class="rail-logo">⬡</div>
-
     <div class="rail-divider"></div>
-
     <a href="dashboard.html" class="rail-item" data-tooltip="Home">🏠</a>
     <a href="discovery.html" class="rail-item" data-tooltip="Discover">🔍</a>
-    <a href="events.html" class="rail-item" data-tooltip="Events">📅<div class="notif-dot"
-        style="background:var(--gold);width:6px;height:6px;"></div></a>
-
+    <a href="events.html" class="rail-item" data-tooltip="Events">📅<div class="notif-dot" style="background:var(--gold);width:6px;height:6px;"></div></a>
     <a href="profile-settings.html" class="rail-item active" data-tooltip="Settings">⚙️</a>
-
     <div class="rail-divider"></div>
-
-    <a href="community-manager.html" class="rail-item rail-comm grad-purple" data-tooltip="Pro Gamers">
-      ⚡<div class="rail-dot bg-dot-green"></div>
-    </a>
-    <a href="#" class="rail-item rail-comm grad-orange" data-tooltip="RPG Tavern">
-      🎨<div class="rail-dot bg-dot-green"></div>
-    </a>
+    <a href="community-manager.html" class="rail-item rail-comm grad-purple" data-tooltip="Pro Gamers">⚡<div class="rail-dot bg-dot-green"></div></a>
+    <a href="#" class="rail-item rail-comm grad-orange" data-tooltip="RPG Tavern">🎨<div class="rail-dot bg-dot-green"></div></a>
     <a href="create-community.html" class="rail-item" data-tooltip="Create Community" style="background:rgba(255,255,255,0.05);color:var(--text-1);font-weight:600;border-radius:14px;">✚</a>
-
     <div class="rail-footer">
-      <div class="rail-avatar" id="sidebarBottomAvatar" onclick="window.location.href='profile-settings.html'"
-        data-tooltip="Profile">AM<div class="rail-dot bg-dot-green"
-          style="position:absolute;bottom:-2px;right:-2px;width:12px;height:12px;border-radius:50%;border:2px solid var(--bg-sidebar);">
-        </div>
-      </div>
+      <div class="rail-avatar" id="sidebarBottomAvatar" onclick="window.location.href='profile-settings.html'" data-tooltip="Profile">AM<div class="rail-dot bg-dot-green" style="position:absolute;bottom:-2px;right:-2px;width:12px;height:12px;border-radius:50%;border:2px solid var(--bg-sidebar);"></div></div>
     </div>
   </aside>
 
-  <div style="flex:1; display:flex; flex-direction:column; min-width:0; overflow:hidden;">
+  <div class="main-column-wrapper">
     <div class="top-bar">
       <div class="tb-logo">
         <div class="tb-logo-icon">⬡</div><span class="tb-logo-name">Gameunity</span>
@@ -53,18 +35,19 @@
       <div class="tb-sep"></div>
       <div class="tb-page">⚙️ Profile &amp; Settings</div>
       <div class="tb-right">
-        <div class="tb-btn" onclick="toast('Changes discarded')">Discard</div>
-        <div class="tb-btn save" onclick="toast('✅ Changes saved!')">Save Changes</div>
+        <div class="tb-btn" onclick="location.reload()">Discard</div>
+        <button class="tb-btn save" id="btnSaveAll" onclick="saveAllChanges()" disabled>Save Changes</button>
         <div class="tb-av" id="topBarAvatar">AM</div>
         <button class="logout-btn" onclick="logout()" data-tooltip="Logout">🚪</button>
       </div>
     </div>
+    
     <div class="body-wrap">
       <nav class="left-nav">
-        <div class="nav-profile" onclick="switchView('profile',document.querySelector('.ln-item'))">
+        <div class="nav-profile" onclick="switchView('profile', document.querySelector('.ln-item'))">
           <div class="profile-av-wrap">
             <div class="profile-av" id="navMainAvatar">AM</div>
-            <div class="profile-av-edit">✏️</div>
+            <div class="profile-av-edit" onclick="openPhotoModal(event)">📷</div>
           </div>
           <div style="text-align:center;">
             <div class="profile-name" id="navName">Alex Morgan</div>
@@ -72,110 +55,206 @@
             <div class="profile-status" style="justify-content: center; margin-top: 4px;">Online</div>
           </div>
         </div>
+        
         <div class="ln-section">
           <div class="ln-label">Account</div>
-          <div class="ln-item active" onclick="switchView('profile',this)"><span class="ln-icon">👤</span> My Profile
-          </div>
-          <div class="ln-item" onclick="switchView('account',this)"><span class="ln-icon">🔐</span> Account &amp;
-            Security</div>
-          <div class="ln-item" onclick="switchView('notifications',this)"><span class="ln-icon">🔔</span> Notifications
-          </div>
-          <div class="ln-item" onclick="switchView('privacy',this)"><span class="ln-icon">🔒</span> Privacy</div>
+          <div class="ln-item active" onclick="switchView('profile', this)"><span class="ln-icon">👤</span> My Profile</div>
+          <div class="ln-item" onclick="switchView('account', this)"><span class="ln-icon">🔐</span> Account &amp; Security</div>
+          <div class="ln-item" onclick="switchView('privacy', this)"><span class="ln-icon">🔒</span> Privacy</div>
         </div>
+        
         <div class="ln-section">
           <div class="ln-label">App</div>
-          <div class="ln-item" onclick="switchView('appearance',this)"><span class="ln-icon">🎨</span> Appearance</div>
-          <div class="ln-item" onclick="switchView('communities',this)"><span class="ln-icon">🌐</span> My Communities
-          </div>
-          <div class="ln-item" onclick="switchView('accessibility',this)"><span class="ln-icon">♿</span> Accessibility
-          </div>
+          <div class="ln-item" onclick="switchView('appearance', this)"><span class="ln-icon">🎨</span> Appearance</div>
+          <div class="ln-item" onclick="switchView('accessibility', this)"><span class="ln-icon">♿</span> Accessibility</div>
         </div>
+        
         <div class="ln-section">
-          <div class="ln-item ln-danger" onclick="switchView('danger',this)"><span class="ln-icon">⚠️</span> Danger Zone
-          </div>
+          <div class="ln-item ln-danger" onclick="switchView('danger', this)"><span class="ln-icon">⚠️</span> Danger Zone</div>
         </div>
       </nav>
+      
       <div class="main">
+        
         <div class="view active" id="view-profile">
           <div class="settings-card">
             <div class="card-title">👤 Public Profile</div>
             <div class="card-sub">This is how other members see you across Gameunity.</div>
+            
             <div class="avatar-picker" style="margin-bottom: 24px;">
               <div class="av-preview" id="mainAvatarPreview">AM</div>
               <div class="av-actions">
-                <div class="btn-sm accent" onclick="toast('Opening photo upload…')">📷 Upload Photo</div>
-                <div class="btn-sm" onclick="toast('Avatar removed')">Remove Photo</div>
+                <div class="btn-sm accent" onclick="openPhotoModal()">📷 Upload Photo</div>
+                <div class="btn-sm" onclick="removePhoto()">Remove Photo</div>
               </div>
-              <div style="font-size: 11px; color: var(--text-3); max-width: 200px;">Recommended: Square image, min
-                200×200px.<br />PNG or JPG, max 5MB.</div>
+              <div style="font-size: 11px; color: var(--text-3); max-width: 200px;">
+                Recommended: Square image, min 200×200px.<br />PNG, JPG or WEBP, max 5MB.
+              </div>
             </div>
+            
             <div class="field-row" style="margin-bottom: 16px;">
-              <div class="field"><label>First Name</label><input id="inpFirstName" type="text" value="Alex" /></div>
-              <div class="field"><label>Last Name</label><input id="inpLastName" type="text" value="Morgan" /></div>
+              <div class="field">
+                <label>First Name *</label>
+                <input id="inpFirstName" type="text" value="Alex" oninput="validateInput(this)" />
+                <span class="error-text" id="err-inpFirstName">First Name is required.</span>
+              </div>
+              <div class="field">
+                <label>Last Name *</label>
+                <input id="inpLastName" type="text" value="Morgan" oninput="validateInput(this)" />
+                <span class="error-text" id="err-inpLastName">Last Name is required.</span>
+              </div>
             </div>
+            
             <div class="field-row" style="margin-bottom: 16px;">
-              <div class="field"><label>Username</label><input id="inpHandle" type="text" value="alexmorgan" />
+              <div class="field">
+                <label>Username *</label>
+                <input id="inpHandle" type="text" value="alexmorgan" oninput="validateInput(this)" />
+                <span class="error-text" id="err-inpHandle">Username is required.</span>
                 <div class="field-hint">nexushub.io/@<span id="hintHandle">alexmorgan</span></div>
               </div>
-              <div class="field"><label>Display Name</label><input id="inpFullName" type="text" value="Alex Morgan" />
+              <div class="field">
+                <label>Display Name *</label>
+                <input id="inpFullName" type="text" value="Alex Morgan" oninput="validateInput(this)" />
+                <span class="error-text" id="err-inpFullName">Display Name is required.</span>
               </div>
             </div>
+            
             <div class="field" style="margin-bottom: 16px;">
               <label>Bio</label>
-              <textarea>Full-stack dev 🛠 · FPS, Node, RPG · Building cool things · based in Chennai 🇮🇳</textarea>
+              <textarea id="inpBio" oninput="markAsDirty()">Full-stack dev 🛠 · FPS, Node, RPG · Building cool things · based in Chennai 🇮🇳</textarea>
               <div class="field-hint">160 characters max. Visible on your public profile.</div>
             </div>
-            <div class="field-row">
-              <div class="field"><label>Website</label><input placeholder="https://yoursite.com" type="text" /></div>
-              <div class="field"><label>Location</label><input type="text" value="Chennai, India" /></div>
-            </div>
           </div>
+          
           <div class="settings-card">
             <div class="card-title">🟢 Status</div>
             <div class="card-sub">Set your current activity status.</div>
             <div class="badge-row">
-              <div class="status-badge on" onclick="setStatus(this)">
-                <div class="dot" style="background:var(--success)"></div> Online
-              </div>
-              <div class="status-badge" onclick="setStatus(this)">
-                <div class="dot" style="background:var(--gold)"></div> Away
-              </div>
-              <div class="status-badge" onclick="setStatus(this)">
-                <div class="dot" style="background:var(--error)"></div> Do Not Disturb
-              </div>
-              <div class="status-badge" onclick="setStatus(this)">
-                <div class="dot" style="background:var(--text-3)"></div> Invisible
-              </div>
-            </div>
-            <div class="field" style="margin-top: 16px;">
-              <label>Custom Status Message</label>
-              <input placeholder="e.g. Building something cool 🔧" type="text" value="Grinding for the hackathon 🚀" />
+              <div class="status-badge on" onclick="setStatus(this)"><div class="dot" style="background:var(--success)"></div> Online</div>
+              <div class="status-badge" onclick="setStatus(this)"><div class="dot" style="background:var(--gold)"></div> Away</div>
+              <div class="status-badge" onclick="setStatus(this)"><div class="dot" style="background:var(--error)"></div> Do Not Disturb</div>
+              <div class="status-badge" onclick="setStatus(this)"><div class="dot" style="background:var(--text-3)"></div> Invisible</div>
             </div>
           </div>
         </div>
+
         <div class="view" id="view-account">
           <div class="settings-card">
             <div class="card-title">📧 Account Details</div>
             <div class="card-sub">Manage your login credentials and account info.</div>
-            <div class="field-row" style="margin-bottom: 24px;">
-              <div class="field"><label>Email Address</label><input id="inpEmail" type="text"
-                  value="alex@example.com" /></div>
-              <div class="field"><label>Phone Number</label><input placeholder="+91 XXXXX XXXXX" type="text" /></div>
+            
+            <div class="field-row" style="margin-bottom: 16px;">
+              <div class="field">
+                <label>Email Address *</label>
+                <input id="inpEmail" type="email" value="alex@example.com" oninput="validateInput(this)" />
+                <span class="error-text" id="err-inpEmail">Valid email is required.</span>
+              </div>
+              <div class="field">
+                <label>Phone Number *</label>
+                <input id="inpPhone" type="tel" value="+1 234 567 890" oninput="validateInput(this)" />
+                <span class="error-text" id="err-inpPhone">Phone number is required.</span>
+              </div>
             </div>
+            
+            <div class="field" style="margin-bottom: 24px;">
+              <label>Recovery Email (Optional)</label>
+              <input id="inpRecovery" type="email" placeholder="backup@example.com" oninput="validateInput(this)" />
+              <span class="error-text" id="err-inpRecovery">Invalid email format.</span>
+            </div>
+            
             <div class="divider"></div>
             <div class="card-title" style="margin-bottom: 8px;">🔑 Change Password</div>
-            <div style="font-size: 12px; color: var(--text-3); margin-bottom: 16px;">Leave blank to keep your current
-              password.</div>
-            <div class="field" style="margin-bottom: 16px;"><label>Current Password</label><input placeholder="••••••••"
-                type="password" /></div>
-            <div class="field-row">
-              <div class="field"><label>New Password</label><input placeholder="Min 8 characters" type="password" />
+            <div style="font-size: 12px; color: var(--text-3); margin-bottom: 16px;">Leave these fields blank unless you want to change your password.</div>
+            
+            <div class="field" style="margin-bottom: 16px;">
+              <label>Current Password</label>
+              <div class="pwd-wrapper">
+                <input id="inpCurrentPwd" type="password" placeholder="••••••••" oninput="validateInput(this)" />
+                <span class="pwd-toggle" onclick="togglePassword('inpCurrentPwd', this)" data-tooltip="Show Password">🙈</span>
               </div>
-              <div class="field"><label>Confirm New Password</label><input placeholder="Repeat new password"
-                  type="password" /></div>
+              <span class="error-text" id="err-inpCurrentPwd">Current password is required to set a new one.</span>
+            </div>
+            
+            <div class="field-row">
+              <div class="field">
+                <label>New Password</label>
+                <div class="pwd-wrapper">
+                  <input id="inpNewPwd" type="password" placeholder="Min 8 characters" oninput="validateInput(this)" />
+                  <span class="pwd-toggle" onclick="togglePassword('inpNewPwd', this)" data-tooltip="Show Password">🙈</span>
+                </div>
+                <span class="error-text" id="err-inpNewPwd">New password is required.</span>
+              </div>
+              <div class="field">
+                <label>Confirm New Password</label>
+                <div class="pwd-wrapper">
+                  <input id="inpConfirmPwd" type="password" placeholder="Repeat new password" oninput="validateInput(this)" />
+                  <span class="pwd-toggle" onclick="togglePassword('inpConfirmPwd', this)" data-tooltip="Show Password">🙈</span>
+                </div>
+                <span class="error-text" id="err-inpConfirmPwd">Passwords do not match.</span>
+              </div>
             </div>
           </div>
         </div>
+
+        <div class="view" id="view-privacy">
+          <div class="settings-card">
+            <div class="card-title">🔒 Privacy Controls</div>
+            <div class="card-sub">Control who sees your information and who can contact you.</div>
+            
+            <div class="field" style="margin-bottom: 16px;">
+              <label>Profile Visibility</label>
+              <select id="selProfileVis" onchange="updatePrivacySettings()">
+                <option value="public">Public (Everyone)</option>
+                <option value="friends">Friends Only</option>
+                <option value="private">Private (Only Me)</option>
+              </select>
+            </div>
+            
+            <div class="field" style="margin-bottom: 24px;">
+              <label>Allow Direct Messages From</label>
+              <select id="selMessages" onchange="updatePrivacySettings()">
+                <option value="everyone">Everyone</option>
+                <option value="friends">Friends Only</option>
+                <option value="nobody">Nobody</option>
+              </select>
+            </div>
+
+            <div class="divider"></div>
+            
+            <div class="toggle-row">
+              <div class="tr-info">
+                <div class="tr-title">Show Email on Profile</div>
+                <div class="tr-desc">Let others see your email address.</div>
+              </div>
+              <div class="toggle" id="togEmail" onclick="toggleSwitch(this); updatePrivacySettings();"></div>
+            </div>
+            
+            <div class="toggle-row">
+              <div class="tr-info">
+                <div class="tr-title">Show Phone Number</div>
+                <div class="tr-desc">Let others see your phone number.</div>
+              </div>
+              <div class="toggle" id="togPhone" onclick="toggleSwitch(this); updatePrivacySettings();"></div>
+            </div>
+            
+            <div class="toggle-row">
+              <div class="tr-info">
+                <div class="tr-title">Show Activity Status</div>
+                <div class="tr-desc">Show when you are currently online or in-game.</div>
+              </div>
+              <div class="toggle on" id="togActivity" onclick="toggleSwitch(this); updatePrivacySettings();"></div>
+            </div>
+            
+            <div class="toggle-row">
+              <div class="tr-info">
+                <div class="tr-title">Search Engine Visibility</div>
+                <div class="tr-desc">Allow Google to index your public profile.</div>
+              </div>
+              <div class="toggle on" id="togSearch" onclick="toggleSwitch(this); updatePrivacySettings();"></div>
+            </div>
+          </div>
+        </div>
+
         <div class="view" id="view-appearance">
           <div class="settings-card">
             <div class="card-title">🎨 Theme</div>
@@ -192,40 +271,119 @@
             </div>
           </div>
         </div>
+
+        <div class="view" id="view-accessibility">
+          <div class="settings-card">
+            <div class="card-title">♿ Accessibility Preferences</div>
+            <div class="card-sub">Adjust settings to make Gameunity easier to use for you.</div>
+            
+            <div class="field" style="margin-bottom: 24px;">
+              <label>Global Font Size</label>
+              <select id="selFontSize" onchange="updateAccessibility()">
+                <option value="medium">Medium (Default)</option>
+                <option value="small">Small</option>
+                <option value="large">Large</option>
+              </select>
+            </div>
+            
+            <div class="divider"></div>
+
+            <div class="toggle-row">
+              <div class="tr-info">
+                <div class="tr-title">High Contrast Mode</div>
+                <div class="tr-desc">Increase contrast between text and backgrounds for better readability.</div>
+              </div>
+              <div class="toggle" id="togContrast" onclick="toggleSwitch(this); updateAccessibility();"></div>
+            </div>
+            
+            <div class="toggle-row">
+              <div class="tr-info">
+                <div class="tr-title">Reduce Motion</div>
+                <div class="tr-desc">Disable UI animations and smooth scrolling.</div>
+              </div>
+              <div class="toggle" id="togMotion" onclick="toggleSwitch(this); updateAccessibility();"></div>
+            </div>
+            
+            <div class="toggle-row">
+              <div class="tr-info">
+                <div class="tr-title">Screen Reader Optimization</div>
+                <div class="tr-desc">Add extra labels and hints for screen reading software.</div>
+              </div>
+              <div class="toggle" id="togScreenReader" onclick="toggleSwitch(this); updateAccessibility();"></div>
+            </div>
+            
+            <div class="toggle-row">
+              <div class="tr-info">
+                <div class="tr-title">Enhanced Keyboard Navigation</div>
+                <div class="tr-desc">Highlight focused elements prominently.</div>
+              </div>
+              <div class="toggle" id="togKeyboard" onclick="toggleSwitch(this); updateAccessibility();"></div>
+            </div>
+          </div>
+        </div>
+
         <div class="view" id="view-danger">
           <div class="danger-zone">
             <div class="dz-title">⚠️ Danger Zone</div>
             <div class="dz-sub">These actions are permanent and cannot be undone.</div>
-            <div class="dz-item">
-              <div>
-                <div class="dz-label">Deactivate Account</div>
-                <div class="dz-desc">Temporarily hide your profile and pause notifications. You can reactivate at any
-                  time.</div>
-              </div><button class="btn-danger" onclick="toast('⚠️ Deactivation flow started…')">Deactivate</button>
-            </div>
+            
             <div class="dz-item">
               <div>
                 <div class="dz-label">Appeal Moderation Action</div>
                 <div class="dz-desc">Submit an appeal if your account was unfairly warned, muted, or banned.</div>
-              </div><button class="btn-danger" onclick="window.location.href='appeal.html'">Submit Appeal</button>
+              </div>
+              <button class="btn-appeal" onclick="window.location.href='appeal.html'">Submit Appeal</button>
             </div>
+
+            <div class="dz-item">
+              <div>
+                <div class="dz-label">Deactivate Account</div>
+                <div class="dz-desc">Temporarily hide your profile and pause notifications.</div>
+              </div>
+              <button class="btn-danger" onclick="toast('⚠️ Deactivation flow started…')">Deactivate</button>
+            </div>
+
             <div class="dz-item">
               <div>
                 <div class="dz-label">Log Out</div>
                 <div class="dz-desc">Sign out of your session on this device.</div>
-              </div><button class="btn-danger" onclick="logout()">Log Out</button>
+              </div>
+              <button class="btn-danger" onclick="logout()">Log Out</button>
             </div>
           </div>
         </div>
+        
       </div>
     </div>
+    
     <div class="toast" id="toast"><span id="toastMsg"></span></div>
+
+    <div class="modal-overlay" id="photoModal">
+      <div class="modal-box">
+        <div class="modal-header">
+          <span>Upload Profile Photo</span>
+          <span class="modal-close" onclick="closePhotoModal()">✕</span>
+        </div>
+        <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
+          <div style="font-size: 24px; margin-bottom: 10px;">📁</div>
+          <div style="font-size: 14px; font-weight: 600;">Click to browse or drag file here</div>
+          <div style="font-size: 11px; color: var(--text-3); margin-top: 6px;">Accepted formats: JPG, JPEG, PNG, WEBP (Max: 5MB)</div>
+        </div>
+        <input type="file" id="fileInput" accept=".jpg,.jpeg,.png,.webp" style="display: none;" onchange="handleFileSelect(event)" />
+        
+        <div id="filePreview" style="display: none; text-align: center; margin-bottom: 16px;">
+          <img id="imgPreview" src="" alt="Preview" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent); margin-bottom: 10px;" />
+          <div id="fileName" style="font-size: 12px; color: var(--text-2);"></div>
+        </div>
+
+        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+          <button class="tb-btn" onclick="closePhotoModal()">Cancel</button>
+          <button class="tb-btn save" id="btnApplyPhoto" onclick="applyUploadedPhoto()" disabled>Apply Photo</button>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <script src="../js/core/auth.js"></script>
-  <script src="../js/components/rbac-nav.js"></script>
   <script src="../js/pages/profile_settings.js"></script>
-<script src="../js/components/notifications.js"></script>
 </body>
-
 </html>
