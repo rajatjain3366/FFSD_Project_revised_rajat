@@ -39,87 +39,250 @@ window.switchPage = function(el, page) {
 };
 
 /**
- * Handles Step-by-Step Wizard Logic
+ * Validates the fields of a specific step
  */
-window.goStep = function(n) {
-    if (activePage !== 'community') return;
+window.isStepValid = function (stepNum) {
+  // Step 1 Validation
+  if (stepNum === 1) {
+    const nameInput = document.getElementById("comm-name");
+    const descInput = document.getElementById("comm-desc");
 
-    for (let i = 1; i <= totalSteps; i++) {
-        const stepIndicator = document.getElementById('s' + i);
-        const stepNum = document.getElementById('sn1' + i); // Reference check from HTML sn1, sn2...
-        const targetNum = document.getElementById('sn' + i);
-        
-        stepIndicator.classList.remove('on', 'done');
-        
-        if (i < n) {
-            stepIndicator.classList.add('done');
-            if (targetNum) targetNum.textContent = '✓';
-        } else if (i === n) {
-            stepIndicator.classList.add('on');
-            if (targetNum) targetNum.textContent = i;
-        } else {
-            if (targetNum) targetNum.textContent = i;
-        }
-
-        // Show/Hide form views
-        const stepView = document.getElementById('step-' + i);
-        if (stepView) {
-            stepView.classList.toggle('on', i === n);
-        }
+    if (window.NexusValidator) {
+      const valid = window.NexusValidator.validateForm([
+        {
+          element: nameInput,
+          validators: [
+            {
+              check: (v) => window.NexusValidator.isRequired(v),
+              message: "Community name is required",
+            },
+            {
+              check: (v) => window.NexusValidator.minLength(v, 3),
+              message: "Name must be at least 3 characters",
+            },
+          ],
+        },
+        {
+          element: descInput,
+          validators: [
+            {
+              check: (v) => window.NexusValidator.isRequired(v),
+              message: "Community description is required",
+            },
+            {
+              check: (v) => window.NexusValidator.minLength(v, 10),
+              message: "Description must be at least 10 characters",
+            },
+          ],
+        },
+      ]);
+      return valid;
+    } else {
+      return !!(nameInput?.value.trim() && descInput?.value.trim());
     }
+  }
 
-    currentStep = n;
-    
-    // Update Progress Bar
-    const progFill = document.getElementById('prog');
-    if (progFill) progFill.style.width = (n / totalSteps * 100) + '%';
-    
-    // Update Bottom Bar
-    document.getElementById('bb-step').textContent = `Step ${n} of ${totalSteps}`;
-    document.getElementById('btn-back').style.display = n > 1 ? 'block' : 'none';
-    document.getElementById('btn-next').textContent = n === totalSteps ? '🚀 Create Community' : 'Continue →';
+  // Step 2 Validation (Website URL)
+  if (stepNum === 2) {
+    const websiteInput = document.getElementById("comm-website");
+    const urlError = document.getElementById("url-error");
+
+    // Reset the error styles just in case they fixed it
+    if (urlError) urlError.style.display = "none";
+    if (websiteInput) websiteInput.style.borderColor = "";
+
+    if (websiteInput && websiteInput.value.trim() !== "") {
+      const urlPattern =
+        /^(https?:\/\/)?([\w\-]+(\.[\w\-]+)+)([\/\w\-]*)*\/?$/i;
+
+      if (!urlPattern.test(websiteInput.value.trim())) {
+        // Show the red text and make the box border red
+        if (urlError) urlError.style.display = "block";
+        websiteInput.style.borderColor = "var(--error)";
+        return false; // Stops them from going to Step 3
+      }
+    }
+  }
+
+  // Steps 3 and 4 pass automatically
+  return true;
+};;
+
+window.triggerBannerUpload = function () {
+  // Dynamically create a file input element
+  const fileInput = document.createElement("input");
+  fileInput.type = "file";
+  fileInput.accept = "image/*"; // Only accept images
+
+  fileInput.onchange = function (e) {
+    const file = e.target.files[0];
+    if (file) {
+      window.toast(`✅ Custom banner ${file.name} selected!`);
+
+      // Deselect the default preset banners
+      document
+        .querySelectorAll(".bp-item")
+        .forEach((b) => b.classList.remove("on"));
+
+      // Read the file and update the Live Preview banner background
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        const previewBanner = document.querySelector(".pc-banner");
+        if (previewBanner) {
+          previewBanner.style.background = `url(${event.target.result})`;
+          previewBanner.style.backgroundSize = "cover";
+          previewBanner.style.backgroundPosition = "center";
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // Programmatically click the hidden input to open the OS file browser
+  fileInput.click();
 };
 
-window.nextStep = function() {
-    if (activePage === 'channel') {
-        const cName = document.getElementById('ch-name-main');
-        const cTopic = document.getElementById('ch-topic-main');
-        if (cName && cTopic && window.NexusValidator) {
-            const valid = window.NexusValidator.validateForm([
-                { element: cName, validators: [{ check: v => window.NexusValidator.isRequired(v), message: 'Channel name is required' }] },
-                { element: cTopic, validators: [{ check: v => window.NexusValidator.isRequired(v), message: 'Channel topic is required' }] }
-            ]);
-            if (!valid) {
-                window.toast('⚠️ Please fill out all required channel fields.');
-                return;
-            }
-        } else if (!cName?.value.trim() || !cTopic?.value.trim()) {
-            window.toast('⚠️ Channel name and topic are required');
-            return;
+window.triggerIconUpload = function () {
+  const fileInput = document.createElement("input");
+  fileInput.type = "file";
+  fileInput.accept = "image/*";
+
+  fileInput.onchange = function (e) {
+    const file = e.target.files[0];
+    if (file) {
+      window.toast(`✅ Custom icon ${file.name} selected!`);
+
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        const previewIcon = document.getElementById("pc-ico");
+        if (previewIcon) {
+          // Clear out any emoji text currently inside the preview icon
+          previewIcon.textContent = "";
+          // Apply the uploaded image as the background
+          previewIcon.style.backgroundImage = `url(${event.target.result})`;
+          previewIcon.style.backgroundSize = "cover";
+          previewIcon.style.backgroundPosition = "center";
         }
-        window.toast('✅ Channel created and added to community!');
-        return;
+      };
+      reader.readAsDataURL(file);
     }
-    
-    if (currentStep === 1 && window.NexusValidator) {
-        const nameInput = document.getElementById('comm-name');
-        const valid = window.NexusValidator.validateForm([
-            { element: nameInput, validators: [
-                { check: v => window.NexusValidator.isRequired(v), message: 'Community name is required' },
-                { check: v => window.NexusValidator.minLength(v, 3), message: 'Name must be at least 3 characters' }
-            ]}
-        ]);
-        if (!valid) {
-            window.toast('⚠️ Please fix the errors before continuing.');
-            return;
-        }
+  };
+
+  fileInput.click();
+};
+
+/**
+ * Handles Step-by-Step Wizard Logic
+ */
+window.goStep = function (n) {
+  if (activePage !== "community") return;
+
+  // --- NEW VALIDATION LOGIC ---
+  // If the user is trying to move FORWARD, we must check if they are allowed
+  if (n > currentStep) {
+    // 1. Prevent skipping steps entirely (e.g., jumping from Step 1 to Step 3)
+    if (n > currentStep + 1) {
+      window.toast("⚠️ Please complete the steps in order.");
+      return;
     }
 
-    if (currentStep < totalSteps) {
-        window.goStep(currentStep + 1);
-    } else {
-        window.toast('🎉 Community created! Redirecting to dashboard…');
+    // 2. Validate the current step before allowing them to leave it
+    if (!window.isStepValid(currentStep)) {
+      window.toast("⚠️ Please fix the errors before continuing.");
+      return; // Stops the navigation
     }
+  }
+  // -----------------------------
+
+  for (let i = 1; i <= totalSteps; i++) {
+    const stepIndicator = document.getElementById("s" + i);
+    const targetNum = document.getElementById("sn" + i);
+
+    stepIndicator.classList.remove("on", "done");
+
+    if (i < n) {
+      stepIndicator.classList.add("done");
+      if (targetNum) targetNum.textContent = "✓";
+    } else if (i === n) {
+      stepIndicator.classList.add("on");
+      if (targetNum) targetNum.textContent = i;
+    } else {
+      if (targetNum) targetNum.textContent = i;
+    }
+
+    // Show/Hide form views
+    const stepView = document.getElementById("step-" + i);
+    if (stepView) {
+      stepView.classList.toggle("on", i === n);
+    }
+  }
+
+  currentStep = n;
+
+  // Update Progress Bar
+  const progFill = document.getElementById("prog");
+  if (progFill) progFill.style.width = (n / totalSteps) * 100 + "%";
+
+  // Update Bottom Bar
+  document.getElementById("bb-step").textContent = `Step ${n} of ${totalSteps}`;
+  document.getElementById("btn-back").style.display = n > 1 ? "block" : "none";
+  document.getElementById("btn-next").textContent =
+    n === totalSteps ? "🚀 Create Community" : "Continue →";
+};
+
+window.nextStep = function () {
+  // Channel Creation Validation (Single Page)
+  if (activePage === "channel") {
+    const cName = document.getElementById("ch-name-main");
+    const cTopic = document.getElementById("ch-topic-main");
+    if (cName && cTopic && window.NexusValidator) {
+      const valid = window.NexusValidator.validateForm([
+        {
+          element: cName,
+          validators: [
+            {
+              check: (v) => window.NexusValidator.isRequired(v),
+              message: "Channel name is required",
+            },
+          ],
+        },
+        {
+          element: cTopic,
+          validators: [
+            {
+              check: (v) => window.NexusValidator.isRequired(v),
+              message: "Channel topic is required",
+            },
+          ],
+        },
+      ]);
+      if (!valid) {
+        window.toast("⚠️ Please fill out all required channel fields.");
+        return;
+      }
+    } else if (!cName?.value.trim() || !cTopic?.value.trim()) {
+      window.toast("⚠️ Channel name and topic are required");
+      return;
+    }
+    window.toast("✅ Channel created and added to community!");
+    return;
+  }
+
+  // Community Creation Wizard Progression
+  if (currentStep < totalSteps) {
+    window.goStep(currentStep + 1);
+  } else {
+    // Submitting on final step
+    if (window.isStepValid(currentStep)) {
+      window.toast("🎉 Community created! Redirecting to dashboard…");
+
+      // --- NEW REDIRECT LOGIC ---
+      setTimeout(() => {
+        window.location.href = "dashboard.html";
+      }, 1500); // 1.5 second delay so the user can read the toast
+      // --------------------------
+    }
+  }
 };
 
 window.prevStep = function() {
