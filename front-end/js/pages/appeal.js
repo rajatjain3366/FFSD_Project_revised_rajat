@@ -1,5 +1,5 @@
 /**
- * Gameunity — Appeal Submission Logic
+ * NexusHub — Appeal Submission Logic
  * Handles form validation, file attachments, and submission states.
  */
 
@@ -39,25 +39,47 @@ const mockFileUpload = (fileName) => {
 /**
  * Adds a "fake" file chip to the UI to simulate file selection
  */
-window.addFakeFile = function() {
-    if (attachmentCount >= MAX_ATTACHMENTS) {
-        alert("Maximum of 3 files allowed.");
-        return;
+window.openEvidencePicker = function() {
+    const input = document.getElementById('evidenceInput');
+    if (!input) return;
+    input.click();
+};
+
+window.handleFileUpload = async function(event) {
+    const files = Array.from(event.target.files || []);
+    const container = document.getElementById('fileChips');
+
+    if (!container) return;
+
+    for (const file of files) {
+        if (attachmentCount >= MAX_ATTACHMENTS) {
+            alert('Maximum of 3 files allowed.');
+            break;
+        }
+
+        if (file.size > 5 * 1024 * 1024) {
+            alert(`File ${file.name} is too large. Max 5MB.`);
+            continue;
+        }
+
+        // Show filename chip while uploading
+        const chip = document.createElement('div');
+        chip.className = 'file-chip';
+        chip.textContent = `📄 ${file.name} (uploading...)`;
+        container.appendChild(chip);
+
+        try {
+            await mockFileUpload(file.name);
+            chip.innerHTML = `📄 ${file.name} <span class="file-chip-remove" onclick="removeFile(this)">✕</span>`;
+            attachmentCount++;
+        } catch (err) {
+            chip.remove();
+            alert(`Failed to upload ${file.name}.`);
+        }
     }
 
-    const fileNames = ['chat_log_march.png', 'context_screenshot.jpg', 'evidence_03.pdf'];
-    const name = fileNames[attachmentCount] || `attachment_${attachmentCount + 1}.png`;
-    
-    const container = document.getElementById('fileChips');
-    const chip = document.createElement('div');
-    chip.className = 'file-chip';
-    chip.innerHTML = `
-        📄 ${name} 
-        <span class="file-chip-remove" onclick="removeFile(this)">✕</span>
-    `;
-    
-    container.appendChild(chip);
-    attachmentCount++;
+    // Reset input so same file(s) can be added again if removed
+    event.target.value = '';
 };
 
 /**
