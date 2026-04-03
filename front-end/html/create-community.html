@@ -133,11 +133,15 @@
 <div class="f-desc">nexushub.io/c/<span class="u-extracted-174" id="slug-preview">devnexus</span></div>
 </div>
 <div>
-<div class="f-label">Primary Language</div>
+<label class="f-label" for="primary-language">Primary Language</label>
 <div class="sel-wrap">
-<select class="f-sel">
-<option>English</option><option>Spanish</option><option>French</option>
-<option>German</option><option>Japanese</option><option>Hindi</option>
+<select class="f-sel" id="primary-language" name="language">
+<option value="english">English</option>
+<option value="spanish">Spanish</option>
+<option value="french">French</option>
+<option value="german">German</option>
+<option value="japanese">Japanese</option>
+<option value="hindi">Hindi</option>
 </select>
 </div>
 </div>
@@ -145,9 +149,9 @@
 <div class="fg">
 <div class="f-label">Category <span class="f-req">*</span></div>
 <div class="cat-grid" id="cat-grid">
-<div class="cat-item on" onclick="pickCat(this,'Gaming')"><div class="cat-ico">💻</div><div class="cat-lbl">Gaming</div></div>
+<div class="cat-item on" onclick="pickCat(this,'Gaming')"><div class="cat-ico">🎮</div><div class="cat-lbl">Gaming</div></div>
 <div class="cat-item" onclick="pickCat(this,'Design')"><div class="cat-ico">🎨</div><div class="cat-lbl">Design</div></div>
-<div class="cat-item" onclick="pickCat(this,'Gaming')"><div class="cat-ico">🎮</div><div class="cat-lbl">Gaming</div></div>
+<div class="cat-item" onclick="pickCat(this,'Coding')"><div class="cat-ico">💻</div><div class="cat-lbl">Coding</div></div>
 <div class="cat-item" onclick="pickCat(this,'Education')"><div class="cat-ico">📚</div><div class="cat-lbl">Education</div></div>
 <div class="cat-item" onclick="pickCat(this,'Music')"><div class="cat-ico">🎵</div><div class="cat-lbl">Music</div></div>
 <div class="cat-item" onclick="pickCat(this,'Fitness')"><div class="cat-ico">💪</div><div class="cat-lbl">Fitness</div></div>
@@ -174,7 +178,7 @@
 <div class="cat-item u-extracted-230" onclick="setIcon(this,'🏆')"><div class="u-extracted-231">🏆</div></div>
 <div class="cat-item u-extracted-230" onclick="setIcon(this,'🌐')"><div class="u-extracted-231">🌐</div></div>
 <div class="cat-item u-extracted-230" onclick="setIcon(this,'⚙')"><div class="u-extracted-231">⚙</div></div>
-<div class="cat-item u-extracted-230" onclick="toast('📷 Upload custom icon')"><div class="u-extracted-231">📁</div></div>
+<div class="cat-item u-extracted-230" onclick="triggerIconUpload()"><div class="u-extracted-231">📁</div></div>
 </div>
 </div>
 </div>
@@ -188,7 +192,7 @@
 <div class="bp-item u-extracted-236" onclick="pickBanner(this)"></div>
 <div class="bp-item u-extracted-237" onclick="pickBanner(this)"></div>
 <div class="bp-item u-extracted-238" onclick="pickBanner(this)"></div>
-<div class="bp-custom" onclick="toast('📷 Custom banner upload opened')">+ Upload</div>
+<div class="bp-custom" onclick="triggerBannerUpload()">+ Upload</div>
 </div>
 <div class="f-desc">Choose a banner gradient or upload your own image</div>
 </div>
@@ -200,7 +204,8 @@
 </div>
 <div>
 <div class="f-label">Website (optional)</div>
-<input class="f-in" placeholder="https://yoursite.com"/>
+<input class="f-in" id="comm-website" placeholder="https://yoursite.com"/>
+<div id="url-error" style="display: none; color: var(--error); font-size: 11px; margin-top: 6px; font-weight: 500;">Type the correct URL</div>
 </div>
 </div>
 </div>
@@ -305,11 +310,7 @@
 </div>
 <div class="fg">
 <div class="f-label">Community Rules</div>
-<textarea class="f-ta u-extracted-242" placeholder="1. Be respectful to all members
-2. No spam or self-promotion
-3. Stay on topic
-4. No hate speech or harassment
-…"></textarea>
+<textarea class="f-ta u-extracted-242" placeholder="1. Be respectful to all members&#10;2. No spam or self-promotion&#10;3. Stay on topic&#10;4. No hate speech or harassment&#10;…"></textarea>
 <div class="f-desc">Shown to members when they join</div>
 </div>
 <div class="fg">
@@ -324,13 +325,13 @@
 <div class="section-title">Create a Channel</div>
 <div class="section-sub">Add a new channel to an existing community.</div>
 <div class="fg">
-<div class="f-label">Community</div>
-<div class="sel-wrap">
-<select class="f-sel">
-<option>Pro Gamers</option>
-<option>Indie Games</option>
-<option>Modding Community</option>
-<option>Tournament Hub</option>
+<label class="f-label" for="ch-community-select">Community</label>
+<div class="sel-wrap">  
+<select class="f-sel" id="ch-community-select" name="community">
+<option value="pro-gamers">Pro Gamers</option>
+<option value="indie-games">Indie Games</option>
+<option value="modding-community">Modding Community</option>
+<option value="tournament-hub">Tournament Hub</option>
 </select>
 </div>
 </div>
